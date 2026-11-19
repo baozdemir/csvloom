@@ -10,6 +10,7 @@ No code changes: `dist/` is the same as in 0.1.0.
 
 - Published from GitHub Actions through npm trusted publishing, with provenance: the npm page shows the workflow run and the commit it was built from.
 - The README links to the documentation on Context7.
+- The README thanks Papa Parse, whose behaviour is csvloom's reference and whose own tests run against `csvloom/papa`.
 
 ## [0.1.0] - 2026-11-19
 

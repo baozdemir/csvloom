@@ -433,6 +433,12 @@ Issues and pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) says wh
 
 <br>
 
+## Acknowledgements
+
+csvloom exists because of [Papa Parse](https://github.com/mholt/PapaParse). Its behaviour is the reference for every string csvloom parses, and its own parse and unparse tests run against `csvloom/papa`. Thanks to its authors and maintainers.
+
+<br>
+
 ## License
 
 MIT. Copyright (c) 2026 Baris Ozdemir. See [LICENSE](LICENSE).
