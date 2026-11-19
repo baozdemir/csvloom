@@ -1,0 +1,3 @@
+source closed
+RangeError: Record at offset 8 is longer than maxRecordLength (1048576)
+rows delivered: 0

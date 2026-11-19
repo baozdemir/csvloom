@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>csvloom U1: browser file flow</title>
+    <script type="module" src="u1.js"></script>
+  </head>
+  <body>
+    <p>
+      Runs one arm of the U1 probe, named by
+      <code>?arm=</code> (<code>stream-worker</code>, <code>stream-main</code>,
+      <code>bulk-main</code>, <code>papa-worker</code>, <code>papa-main</code>), on the file chosen
+      below, and prints its result as JSON.
+    </p>
+    <input type="file" id="file" />
+    <pre id="out">waiting for a file</pre>
+  </body>
+</html>

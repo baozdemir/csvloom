@@ -1,0 +1,12 @@
+{
+  "note": "DIAGNOSTIC (indication only), taken on a Linux x86-64 VM: raw bytes of the build (esbuild 0.28.2), gzip bytes from Node 24.22.1's zlib at its default level, packed tarball bytes from npm 11.19.1. npm run test:package fails when a number grows more than 10% over this file; change it only with a reason in the commit message.",
+  "bytes": {
+    "csvloom.tgz": { "packed": 189076 },
+    "dist/index.cjs": { "raw": 92655, "gzip": 23516 },
+    "dist/index.js": { "raw": 91602, "gzip": 23163 },
+    "dist/papa.cjs": { "raw": 51330, "gzip": 12438 },
+    "dist/papa.js": { "raw": 50246, "gzip": 12010 },
+    "dist/stream.cjs": { "raw": 128175, "gzip": 32972 },
+    "dist/stream.js": { "raw": 127247, "gzip": 32629 }
+  }
+}

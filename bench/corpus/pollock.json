@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/HPI-Information-Systems/Pollock",
+  "commit": "bd2a646f4cf55d2bd4e76df511c9c9f675ae7bcc",
+  "licence": "MIT (LICENSE at the commit); only polluted_files/ and the evaluator are used, survey/ and survey_sample/ are not (no licence per file)",
+  "files": 6884,
+  "sha256OfSums": "73ca215ec143c7fe549478094bfbee0123db375d1fb10855658de0a3bc1dfe43"
+}

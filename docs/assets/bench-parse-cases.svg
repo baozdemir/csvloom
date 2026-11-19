@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="386" viewBox="0 0 760 386" role="img" aria-labelledby="title desc">
+<title id="title">csvloom against Papa Parse in each of the 24 parse cases</title>
+<desc id="desc">Grouped horizontal bar chart in two panels, 1 MiB and 32 MiB files. For each kind of CSV, how many times faster csvloom is than Papa Parse, with rows as arrays and as objects; Papa Parse is 1, and every bar is above it. 1 MiB files: simple 2.51 (arrays), 3.88 (objects); quote-heavy 4.55 (arrays), 4.55 (objects); multiline 3.62 (arrays), 4.44 (objects); wide 2.97 (arrays), 3.74 (objects); unicode 3.56 (arrays), 3.91 (objects); long-field 7.23 (arrays), 7.53 (objects). 32 MiB files: simple 1.23 (arrays), 1.79 (objects); quote-heavy 1.31 (arrays), 1.74 (objects); multiline 1.24 (arrays), 1.52 (objects); wide 1.10 (arrays), 2.36 (objects); unicode 1.23 (arrays), 1.67 (objects); long-field 2.64 (arrays), 2.44 (objects).</desc>
+<g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" fill="#6e7781">
+<text x="0" y="22" font-size="17" font-weight="700">csvloom against Papa Parse in each of the 24 parse cases</text>
+<text x="0" y="46" font-size="13">How many times faster csvloom is. The dashed line is Papa Parse (1×): every bar passes it.</text>
+<path d="M0 59h10a4 4 0 0 1 4 4v4a4 4 0 0 1 -4 4h-10z" fill="#2f7ee0"/>
+<text x="20" y="70" font-size="13">rows as arrays</text>
+<path d="M130 59h10a4 4 0 0 1 4 4v4a4 4 0 0 1 -4 4h-10z" fill="#e0612a"/>
+<text x="150" y="70" font-size="13">rows as objects (header: true)</text>
+<text x="102" y="100" font-size="14" font-weight="700">1 MiB files</text>
+<line x1="102" y1="354" x2="370" y2="354" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<line x1="102" y1="354" x2="102" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="102" y="372" font-size="12" text-anchor="middle">0×</text>
+<line x1="169" y1="354" x2="169" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="169" y="372" font-size="12" text-anchor="middle">2×</text>
+<line x1="236" y1="354" x2="236" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="236" y="372" font-size="12" text-anchor="middle">4×</text>
+<line x1="303" y1="354" x2="303" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="303" y="372" font-size="12" text-anchor="middle">6×</text>
+<line x1="370" y1="354" x2="370" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="370" y="372" font-size="12" text-anchor="middle">8×</text>
+<line x1="135.5" y1="108" x2="135.5" y2="352" stroke="#6e7781" stroke-opacity="0.7" stroke-width="1" stroke-dasharray="4 3"/>
+<path d="M102 118h80a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-80z" fill="#2f7ee0"/>
+<text x="192" y="129" font-size="12" font-weight="600">2.51×</text>
+<path d="M102 133h126a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-126z" fill="#e0612a"/>
+<text x="238" y="144" font-size="12" font-weight="600">3.88×</text>
+<path d="M102 158h148.5a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-148.5z" fill="#2f7ee0"/>
+<text x="260.5" y="169" font-size="12" font-weight="600">4.55×</text>
+<path d="M102 173h148.4a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-148.4z" fill="#e0612a"/>
+<text x="260.4" y="184" font-size="12" font-weight="600">4.55×</text>
+<path d="M102 198h117.1a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-117.1z" fill="#2f7ee0"/>
+<text x="229.1" y="209" font-size="12" font-weight="600">3.62×</text>
+<path d="M102 213h144.7a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-144.7z" fill="#e0612a"/>
+<text x="256.7" y="224" font-size="12" font-weight="600">4.44×</text>
+<path d="M102 238h95.3a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-95.3z" fill="#2f7ee0"/>
+<text x="207.3" y="249" font-size="12" font-weight="600">2.97×</text>
+<path d="M102 253h121.2a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-121.2z" fill="#e0612a"/>
+<text x="233.2" y="264" font-size="12" font-weight="600">3.74×</text>
+<path d="M102 278h115.3a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-115.3z" fill="#2f7ee0"/>
+<text x="227.3" y="289" font-size="12" font-weight="600">3.56×</text>
+<path d="M102 293h126.9a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-126.9z" fill="#e0612a"/>
+<text x="238.9" y="304" font-size="12" font-weight="600">3.91×</text>
+<path d="M102 318h238.1a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-238.1z" fill="#2f7ee0"/>
+<text x="350.1" y="329" font-size="12" font-weight="600">7.23×</text>
+<path d="M102 333h248.2a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-248.2z" fill="#e0612a"/>
+<text x="360.2" y="344" font-size="12" font-weight="600">7.53×</text>
+<text x="436" y="100" font-size="14" font-weight="700">32 MiB files</text>
+<line x1="436" y1="354" x2="704" y2="354" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<line x1="436" y1="354" x2="436" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="436" y="372" font-size="12" text-anchor="middle">0×</text>
+<line x1="503" y1="354" x2="503" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="503" y="372" font-size="12" text-anchor="middle">2×</text>
+<line x1="570" y1="354" x2="570" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="570" y="372" font-size="12" text-anchor="middle">4×</text>
+<line x1="637" y1="354" x2="637" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="637" y="372" font-size="12" text-anchor="middle">6×</text>
+<line x1="704" y1="354" x2="704" y2="358" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="704" y="372" font-size="12" text-anchor="middle">8×</text>
+<line x1="469.5" y1="108" x2="469.5" y2="352" stroke="#6e7781" stroke-opacity="0.7" stroke-width="1" stroke-dasharray="4 3"/>
+<path d="M436 118h37.1a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-37.1z" fill="#2f7ee0"/>
+<text x="483.1" y="129" font-size="12" font-weight="600">1.23×</text>
+<path d="M436 133h56a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-56z" fill="#e0612a"/>
+<text x="502" y="144" font-size="12" font-weight="600">1.79×</text>
+<path d="M436 158h40a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-40z" fill="#2f7ee0"/>
+<text x="486" y="169" font-size="12" font-weight="600">1.31×</text>
+<path d="M436 173h54.3a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-54.3z" fill="#e0612a"/>
+<text x="500.3" y="184" font-size="12" font-weight="600">1.74×</text>
+<path d="M436 198h37.5a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-37.5z" fill="#2f7ee0"/>
+<text x="483.5" y="209" font-size="12" font-weight="600">1.24×</text>
+<path d="M436 213h47a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-47z" fill="#e0612a"/>
+<text x="493" y="224" font-size="12" font-weight="600">1.52×</text>
+<path d="M436 238h32.9a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-32.9z" fill="#2f7ee0"/>
+<text x="478.9" y="249" font-size="12" font-weight="600">1.10×</text>
+<path d="M436 253h75.1a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-75.1z" fill="#e0612a"/>
+<text x="521.1" y="264" font-size="12" font-weight="600">2.36×</text>
+<path d="M436 278h37.2a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-37.2z" fill="#2f7ee0"/>
+<text x="483.2" y="289" font-size="12" font-weight="600">1.23×</text>
+<path d="M436 293h51.8a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-51.8z" fill="#e0612a"/>
+<text x="497.8" y="304" font-size="12" font-weight="600">1.67×</text>
+<path d="M436 318h84.4a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-84.4z" fill="#2f7ee0"/>
+<text x="530.4" y="329" font-size="12" font-weight="600">2.64×</text>
+<path d="M436 333h77.7a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-77.7z" fill="#e0612a"/>
+<text x="523.7" y="344" font-size="12" font-weight="600">2.44×</text>
+<text x="92" y="137" font-size="14" font-weight="600" text-anchor="end">simple</text>
+<text x="92" y="177" font-size="14" font-weight="600" text-anchor="end">quote-heavy</text>
+<text x="92" y="217" font-size="14" font-weight="600" text-anchor="end">multiline</text>
+<text x="92" y="257" font-size="14" font-weight="600" text-anchor="end">wide</text>
+<text x="92" y="297" font-size="14" font-weight="600" text-anchor="end">unicode</text>
+<text x="92" y="337" font-size="14" font-weight="600" text-anchor="end">long-field</text>
+</g>
+</svg>

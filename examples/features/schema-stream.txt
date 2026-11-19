@@ -1,0 +1,7 @@
+[{"name":"Ada","age":36}] rowOffset 0 done false
+{"type":"Schema","code":"InvalidRow","message":"age must be a whole number","row":1,"path":["age"],"value":{"name":"Grace","age":"x"},"line":3,"column":1,"offset":16,"snippet":"Grace,x"}
+[] rowOffset 2 done false
+{"type":"Schema","code":"InvalidRow","message":"name is required","row":2,"path":["name"],"value":{"name":null,"age":41},"line":4,"column":1,"offset":24,"snippet":",41"}
+{"type":"Schema","code":"InvalidRow","message":"age must be a whole number","row":3,"path":["age"],"value":{"name":"Linus","age":2.5},"line":5,"column":1,"offset":28,"snippet":"Linus,2.5"}
+[{"name":"Alan","age":41}] rowOffset 4 done true
+TypeError: Parse option "schema" returned a Promise; use parseStream for an async validator

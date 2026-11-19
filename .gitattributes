@@ -1,0 +1,3 @@
+# Text files keep LF line endings on every platform, Windows included: the examples, the fixtures
+# and the expected outputs are compared byte for byte.
+* text=auto eol=lf

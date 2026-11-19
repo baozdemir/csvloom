@@ -1,0 +1,4 @@
+[{"sku":"A-1","qty":2,"price":9.5},{"sku":"B-7","qty":null,"price":12}]
+{"delimiter":";","linebreak":"\r\n","aborted":false,"truncated":false,"cursor":36,"renamedHeaders":null,"fields":["sku","qty","price"]}
+[{"type":"Quotes","code":"MissingQuotes","message":"Quoted field unterminated","row":2,"index":11},{"type":"FieldMismatch","code":"TooManyFields","message":"Too many fields: expected 2 fields but parsed 3","row":0},{"type":"FieldMismatch","code":"TooFewFields","message":"Too few fields: expected 2 fields but parsed 1","row":1}]
+"\"sku\",\"qty\",\"price\"\n\"A-1\",\"2\",\"9.5\"\n\"B-7\",,\"12\""

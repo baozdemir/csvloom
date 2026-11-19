@@ -1,0 +1,285 @@
+// The declaration text csvloom/papa reaches, as `npm run build` writes it. A change to
+// csvloom/papa's declarations, its types or their doc comments, changes this file too, on purpose.
+// Sections: dist/papa.d.ts and dist/papa.d.cts whole, then every declaration of dist/types.d.ts
+// and dist/options.d.ts that dist/papa.d.ts imports or that such a declaration names, and the main
+// entry's result types (HeaderRow, ParseResult and what it names); each is cut by name with its
+// doc comment (the dist/*.d.cts blocks are the same text). Check 19 of scripts/verify-package.mjs
+// compares the same cut of its build with these.
+// dist/papa.d.ts and dist/papa.d.cts are kept byte for byte, including one literal U+FEFF in the
+// BYTE_ORDER_MARK member of dist/papa.d.ts's default export.
+// SHA-256 of the build these declarations come from (esbuild 0.28.2, TypeScript 6.0.3):
+//   dist/papa.js     65d9554bcef56223f3c363e5b13ce2c45d8c990c8719359ea93c39773c81fc67
+//   dist/papa.cjs    9a143c6213f96e6a47298b5e503573c467fd8d15ddf3d3a49a3e0ae35633b6b2
+//   dist/papa.d.ts   65f8e51ad28d09f36fe98df56ea16d16adaaf1f6039c4937fe99cb82f2a13c36
+//   dist/papa.d.cts  d6fe6c6d6fa95c7cf8a36a6a7b7a8b93dc108de17c4881a4627fec6478e1f35f
+//   dist/types.d.ts  6a1128b7d33574b38348302b07102d37489606ab3b105c266ff4a3588329caba (= types.d.cts)
+//   dist/options.d.ts a8b8b603eb612daeb00276155d32e6ba8d494aadbf18fefbd4d320624e97cc13
+//   dist/options.d.cts 6030816328f0675d8e5ea3f5629d0e17bfe1e04df9f646dfa0a6f3b974910bc3
+// ==== papa.d.ts (whole file)
+import { BAD_DELIMITERS, UnsupportedFeatureError } from './options.js';
+import type { PapaParseConfig, PapaParseError, PapaParseMeta, PapaParseResult, PapaUnparseConfig } from './types.js';
+/** Papa.RECORD_SEP: the ASCII record separator, U+001E. */
+export declare const RECORD_SEP = "\u001E";
+/** Papa.UNIT_SEP: the ASCII unit separator, U+001F. */
+export declare const UNIT_SEP = "\u001F";
+/** Papa.BYTE_ORDER_MARK: U+FEFF. */
+export declare const BYTE_ORDER_MARK = "\uFEFF";
+export { BAD_DELIMITERS, UnsupportedFeatureError };
+/** The type names of @types/papaparse 5.5.2 that have a meaning in csvloom/papa. */
+export type { PapaParseConfig as ParseConfig, PapaParseError as ParseError, PapaParseMeta as ParseMeta, PapaParseResult as ParseResult, PapaUnparseConfig as UnparseConfig, };
+/**
+ * Papa Parse 5.7.1's parse of a string: the config is read with Papa's coercions and unknown keys
+ * are ignored. A feature csvloom leaves out, such as a worker, a download, a callback or a File,
+ * Blob or stream input, throws UnsupportedFeatureError; the other differences are listed in the
+ * compatibility guide.
+ * Typed as @types/papaparse 5.5.2 types the string call: T is the row type the caller states, and
+ * nothing checks it.
+ *
+ * @example
+ * ```ts
+ * import Papa from 'csvloom/papa'; // was: import Papa from 'papaparse';
+ *
+ * type Item = { sku: string; qty: number };
+ * const { data } = Papa.parse<Item>('sku,qty\nA-1,2\n', { header: true, dynamicTyping: true, skipEmptyLines: true });
+ * // data: [{ sku: 'A-1', qty: 2 }]
+ * ```
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/migrating-from-papaparse.md
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/compatibility.md
+ */
+export declare function parse<T>(input: string, config?: PapaParseConfig<T>): PapaParseResult<T>;
+/**
+ * Papa Parse 5.7.1's unparse, its config read as Papa reads it. The differences are listed in the
+ * compatibility guide.
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/compatibility.md
+ */
+export declare function unparse(input: unknown, config?: PapaUnparseConfig): string;
+/** The Papa object's supported members, frozen. */
+declare const Papa: Readonly<{
+    parse: typeof parse;
+    unparse: typeof unparse;
+    RECORD_SEP: "\u001E";
+    UNIT_SEP: "\u001F";
+    BYTE_ORDER_MARK: "﻿";
+    BAD_DELIMITERS: readonly string[];
+    UnsupportedFeatureError: typeof UnsupportedFeatureError;
+}>;
+/** The same type names on the default import, as in `Papa.ParseResult<Row>`. */
+declare namespace Papa {
+    type ParseConfig<T = any, TInput = undefined> = PapaParseConfig<T, TInput>;
+    type ParseError = PapaParseError;
+    type ParseMeta = PapaParseMeta;
+    type ParseResult<T> = PapaParseResult<T>;
+    type UnparseConfig = PapaUnparseConfig;
+}
+export { Papa as default };
+// ==== papa.d.cts (whole file)
+import { BAD_DELIMITERS, UnsupportedFeatureError } from './options.cjs';
+import type { PapaParseConfig, PapaParseError, PapaParseMeta, PapaParseResult, PapaUnparseConfig } from './types.cjs';
+/** Papa.RECORD_SEP: the ASCII record separator, U+001E. */
+export declare const RECORD_SEP = "\u001E";
+/** Papa.UNIT_SEP: the ASCII unit separator, U+001F. */
+export declare const UNIT_SEP = "\u001F";
+/** Papa.BYTE_ORDER_MARK: U+FEFF. */
+export declare const BYTE_ORDER_MARK = "\uFEFF";
+export { BAD_DELIMITERS, UnsupportedFeatureError };
+/** The type names of @types/papaparse 5.5.2 that have a meaning in csvloom/papa. */
+export type { PapaParseConfig as ParseConfig, PapaParseError as ParseError, PapaParseMeta as ParseMeta, PapaParseResult as ParseResult, PapaUnparseConfig as UnparseConfig, };
+/**
+ * Papa Parse 5.7.1's parse of a string: the config is read with Papa's coercions and unknown keys
+ * are ignored. A feature csvloom leaves out, such as a worker, a download, a callback or a File,
+ * Blob or stream input, throws UnsupportedFeatureError; the other differences are listed in the
+ * compatibility guide.
+ * Typed as @types/papaparse 5.5.2 types the string call: T is the row type the caller states, and
+ * nothing checks it.
+ *
+ * @example
+ * ```ts
+ * import Papa from 'csvloom/papa'; // was: import Papa from 'papaparse';
+ *
+ * type Item = { sku: string; qty: number };
+ * const { data } = Papa.parse<Item>('sku,qty\nA-1,2\n', { header: true, dynamicTyping: true, skipEmptyLines: true });
+ * // data: [{ sku: 'A-1', qty: 2 }]
+ * ```
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/migrating-from-papaparse.md
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/compatibility.md
+ */
+export declare function parse<T>(input: string, config?: PapaParseConfig<T>): PapaParseResult<T>;
+/**
+ * Papa Parse 5.7.1's unparse, its config read as Papa reads it. The differences are listed in the
+ * compatibility guide.
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/compatibility.md
+ */
+export declare function unparse(input: unknown, config?: PapaUnparseConfig): string;
+// ==== options.d.ts BAD_DELIMITERS
+/** Papa.BAD_DELIMITERS: the values Papa Parse 5.7.1 replaces with ',' when given as a delimiter. */
+export declare const BAD_DELIMITERS: readonly string[];
+// ==== types.d.ts DelimiterError
+/** Delimiter detection failed and ',' was used; listed after quote errors. */
+export interface DelimiterError {
+    type: 'Delimiter';
+    code: 'UndetectableDelimiter';
+    message: string;
+}
+// ==== types.d.ts FieldCountError
+export interface FieldCountError {
+    type: 'FieldMismatch';
+    code: 'TooFewFields' | 'TooManyFields';
+    message: string;
+    /** Index into `data`; the header record is not counted. */
+    row: number;
+}
+// ==== types.d.ts HeaderRow
+/**
+ * Fields beyond the header's length are collected under `__parsed_extra`;
+ * fields missing from a short record are absent.
+ */
+export type HeaderRow<V> = Record<string, V | V[]>;
+// ==== types.d.ts Newline
+export type Newline = '\n' | '\r\n' | '\r';
+// ==== types.d.ts PapaParseConfig
+/**
+ * The csvloom/papa parse config: Papa Parse 5.7.1's option names with the value types
+ * @types/papaparse 5.5.2 declares for the supported options, and the excluded options only as
+ * their inactive values. At run time each value is read as Papa reads it and unknown keys are
+ * ignored. The type parameters of @types/papaparse's ParseConfig are accepted and type nothing.
+ * `transform` is a method, as it is there, so that a function whose `field` is a `string`, for a
+ * parse with a header, is accepted.
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/compatibility.md
+ */
+export interface PapaParseConfig<_T = any, _TInput = undefined> {
+    delimiter?: string | ((input: string) => string) | undefined;
+    newline?: '\r' | '\n' | '\r\n' | undefined;
+    quoteChar?: string | undefined;
+    escapeChar?: string | undefined;
+    header?: boolean | undefined;
+    transformHeader?: ((header: string, index: number) => string) | undefined;
+    dynamicTyping?: boolean | {
+        [headerName: string]: boolean;
+        [columnNumber: number]: boolean;
+    } | ((field: string | number) => boolean) | undefined;
+    preview?: number | undefined;
+    comments?: false | string | undefined;
+    skipEmptyLines?: boolean | 'greedy' | undefined;
+    fastMode?: boolean | undefined;
+    transform?(value: string, field: string | number): unknown;
+    delimitersToGuess?: readonly string[] | undefined;
+    skipFirstNLines?: number | undefined;
+    worker?: false | undefined;
+    download?: false | undefined;
+    encoding?: '' | undefined;
+    withCredentials?: false | undefined;
+    step?: undefined;
+    chunk?: undefined;
+    complete?: undefined;
+    error?: undefined;
+    beforeFirstChunk?: undefined;
+    chunkSize?: undefined;
+    downloadRequestHeaders?: undefined;
+    downloadRequestBody?: undefined;
+    downloadTimeout?: undefined;
+}
+// ==== types.d.ts PapaParseError
+/**
+ * @types/papaparse 5.5.2's ParseError, which every csvloom error fits: a
+ * Delimiter error has no `row`, and only a Quotes error has an `index`.
+ */
+export interface PapaParseError {
+    type: 'Quotes' | 'Delimiter' | 'FieldMismatch';
+    code: 'MissingQuotes' | 'UndetectableDelimiter' | 'TooFewFields' | 'TooManyFields' | 'InvalidQuotes';
+    message: string;
+    row?: number | undefined;
+    index?: number | undefined;
+}
+// ==== types.d.ts PapaParseMeta
+/**
+ * @types/papaparse 5.5.2's ParseMeta, and null for `renamedHeaders`: what Papa
+ * Parse 5.7.1 and csvloom/papa return when no header was renamed.
+ */
+export interface PapaParseMeta {
+    delimiter: string;
+    linebreak: string;
+    aborted: boolean;
+    fields?: string[] | undefined;
+    truncated: boolean;
+    cursor: number;
+    renamedHeaders?: Record<string, string> | null;
+}
+// ==== types.d.ts PapaParseResult
+/** @types/papaparse 5.5.2's ParseResult. */
+export interface PapaParseResult<T> {
+    data: T[];
+    errors: PapaParseError[];
+    meta: PapaParseMeta;
+}
+// ==== types.d.ts PapaUnparseConfig
+/**
+ * The csvloom/papa unparse config: @types/papaparse 5.5.2's UnparseConfig.
+ * Each value is read as Papa Parse 5.7.1 reads it (a value of another type
+ * means the default) and unknown keys are ignored.
+ * @see https://github.com/baozdemir/csvloom/blob/main/docs/compatibility.md
+ */
+export interface PapaUnparseConfig {
+    quotes?: boolean | readonly boolean[] | ((value: unknown, columnIndex: number) => boolean) | undefined;
+    quoteChar?: string | undefined;
+    escapeChar?: string | undefined;
+    delimiter?: string | undefined;
+    header?: boolean | undefined;
+    newline?: string | undefined;
+    skipEmptyLines?: boolean | 'greedy' | undefined;
+    columns?: readonly string[] | undefined;
+    escapeFormulae?: boolean | RegExp | undefined;
+}
+// ==== types.d.ts ParseError
+export type ParseError = QuoteError | DelimiterError | FieldCountError;
+// ==== types.d.ts ParseMeta
+/**
+ * Field is the type of a header name: a string, except in csvloom/papa,
+ * where a transformHeader result is used as the name as returned.
+ */
+export interface ParseMeta<Field = string> {
+    /** The delimiter used: given, returned by the function, or detected. */
+    delimiter: string;
+    /** The newline used: given or detected. */
+    linebreak: Newline;
+    aborted: false;
+    /** True when preview ended the parse. */
+    truncated: boolean;
+    /**
+     * UTF-16 offset, after a leading BOM and skipFirstNLines are removed, where
+     * the last record read and its line break end: the text length unless the
+     * text ends with comment lines or preview ended the parse. When lines count
+     * for preview, the record that ended it is read but not returned if preview
+     * records were already returned.
+     */
+    cursor: number;
+    /** Renamed duplicate header to original name; null when nothing was renamed. */
+    renamedHeaders: Record<string, Field> | null;
+    /** Header fields after transformHeader and renaming; present only with `header: true`. */
+    fields?: Field[];
+}
+// ==== types.d.ts ParseResult
+export interface ParseResult<Row, Field = string> {
+    data: Row[];
+    errors: ParseError[];
+    meta: ParseMeta<Field>;
+}
+// ==== types.d.ts QuoteError
+export interface QuoteError {
+    type: 'Quotes';
+    code: 'MissingQuotes' | 'InvalidQuotes';
+    message: string;
+    /** Number of records completed before the field with the error. */
+    row: number;
+    /** UTF-16 offset just after the field's opening quote. */
+    index: number;
+}
+// ==== options.d.ts UnsupportedFeatureError
+/**
+ * Thrown when a config or input asks for a Papa Parse feature that csvloom leaves out, such as
+ * workers, downloads, callbacks or a File, Blob or stream input.
+ */
+export declare class UnsupportedFeatureError extends Error {
+    readonly name = "UnsupportedFeatureError";
+    readonly feature: string;
+    constructor(feature: string);
+}

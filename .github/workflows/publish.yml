@@ -1,0 +1,50 @@
+# Publishes csvloom to npm with npm trusted publishing: the job proves its identity to npm with a
+# GitHub OIDC token, so there is no npm token and no secret anywhere. Per
+# https://docs.npmjs.com/trusted-publishers, trusted publishing needs npm 11.5.1 or later, Node
+# 22.14.0 or later and a GitHub-hosted runner.
+#
+# Setup before the first run:
+#   - on npmjs.com, a trusted publisher for csvloom: this repository, workflow filename
+#     publish.yml, environment npm; allow "npm stage publish", not "npm publish";
+#   - in this repository, an environment named npm;
+#   - the repository is public, because npm attests provenance only for a public repository.
+#
+# Run it on the tag v<version>, where <version> is package.json's version.
+name: publish
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  stage:
+    name: Stage a release on npm
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # the OIDC token npm trusted publishing asks for
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.22.1'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: The run is on the tag of the version in package.json
+        run: test "$GITHUB_REF" = "refs/tags/v$(node -p "require('./package.json').version")"
+      - name: The repository is public, so that npm attests provenance
+        env:
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: test "$REPOSITORY_PRIVATE" = "false"
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - run: CSVLOOM_NODE_BINARIES="$(command -v node)" npm run test:package
+      # Staged, not published: nothing is public until a maintainer approves the staged version
+      # with 2FA on npmjs.com or in the CLI.
+      - run: npm stage publish

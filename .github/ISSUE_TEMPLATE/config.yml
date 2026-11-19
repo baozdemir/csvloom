@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/baozdemir/csvloom/discussions/categories/q-a
+    about: Questions about using csvloom go to Discussions, not issues.
+  - name: Report a vulnerability
+    url: https://github.com/baozdemir/csvloom/security/policy
+    about: Report it privately, as the security policy says, never in a public issue.
+  - name: Search existing issues
+    url: https://github.com/baozdemir/csvloom/issues
+    about: Your question or report may already have an answer.

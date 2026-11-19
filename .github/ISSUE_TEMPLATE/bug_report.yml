@@ -1,0 +1,59 @@
+name: Bug report
+description: Wrong rows, a wrong error, a crash, or a difference from Papa Parse 5.7.1 that the compatibility matrix does not list
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: A vulnerability does not belong here. Report it privately, as SECURITY.md says.
+  - type: dropdown
+    id: entry
+    attributes:
+      label: Entry
+      options:
+        - csvloom (parse, unparse, parseDetailed)
+        - csvloom/papa
+        - csvloom/stream (parseStream)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version of the package
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime and version
+      description: For example Node 24.22.1 on Linux x64, or Firefox 159 on macOS. For a bundler, its name and version too.
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: The smallest input that shows it
+      description: As a JavaScript string literal, so that line breaks, quotes and a BOM are visible. For a stream, the chunks.
+      render: js
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: The options
+      render: js
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What you got
+      description: The result as JSON, or the error with its message.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: If Papa Parse 5.7.1 gives another result for the same input and options, paste it here.
+    validations:
+      required: true

@@ -1,0 +1,4 @@
+[["name","city"],["Ada","London, UK"],["Grace","New York"]]
+[{"name":"Ada","city":"London, UK"},{"name":"Grace","city":"New York"}] 0 ["name","city"]
+name,note
+Ada,"'=1+1"

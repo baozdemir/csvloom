@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>csvloom/stream browser probes</title>
+    <script type="module" src="probes.js"></script>
+  </head>
+  <body>
+    <p>
+      Runs the browser probes and prints their results as JSON. With
+      <code>?input</code> the File probe waits for a file in the input below (Playwright sets it);
+      without it the page builds the File itself.
+    </p>
+    <input type="file" id="file" />
+    <pre id="out">running</pre>
+  </body>
+</html>

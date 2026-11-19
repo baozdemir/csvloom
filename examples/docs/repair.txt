@@ -1,0 +1,4 @@
+[{"id":"1","name":"Ada","city":""},{"id":"2","name":"\"Grace","city":"New York"}] 0 errors
+pad-missing on line 2
+unclosed-quote on line 3
+trailing-empty-record on line 3

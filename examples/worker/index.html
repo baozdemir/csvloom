@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>csvloom/stream in a module worker</title>
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <label>CSV file <input type="file" id="file" accept=".csv,text/csv" /></label>
+    <label>
+      Post back
+      <select id="mode">
+        <option value="count">row counts</option>
+        <option value="batches">batches</option>
+      </select>
+    </label>
+    <output id="out"></output>
+  </body>
+</html>

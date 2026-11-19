@@ -1,0 +1,146 @@
+{
+  "name": "csvloom",
+  "version": "0.1.0",
+  "description": "Fast, safe CSV parser and writer for JavaScript and TypeScript: a drop-in replacement for Papa Parse on strings, a streaming parser with async iterators, errors with positions, repair and formula escaping. Zero dependencies, no eval.",
+  "keywords": [
+    "csv",
+    "csv-parser",
+    "csv-writer",
+    "parse",
+    "parser",
+    "unparse",
+    "papaparse",
+    "stream",
+    "streaming",
+    "async-iterator",
+    "tsv",
+    "delimiter",
+    "excel",
+    "csv-injection",
+    "standard-schema",
+    "typescript",
+    "browser",
+    "zero-dependency"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baozdemir/csvloom.git"
+  },
+  "homepage": "https://github.com/baozdemir/csvloom#readme",
+  "bugs": {
+    "url": "https://github.com/baozdemir/csvloom/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "typesVersions": {
+    "*": {
+      "papa": [
+        "./dist/papa.d.cts"
+      ],
+      "stream": [
+        "./dist/stream.d.cts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./papa": {
+      "import": {
+        "types": "./dist/papa.d.ts",
+        "default": "./dist/papa.js"
+      },
+      "require": {
+        "types": "./dist/papa.d.cts",
+        "default": "./dist/papa.cjs"
+      }
+    },
+    "./stream": {
+      "import": {
+        "types": "./dist/stream.d.ts",
+        "default": "./dist/stream.js"
+      },
+      "require": {
+        "types": "./dist/stream.d.cts",
+        "default": "./dist/stream.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "22.23.4 || 24.22.1 || 26.12.1 || 26.13.1",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "11.19.1",
+      "onFail": "warn"
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.build.json",
+    "test": "vitest run --testTimeout=30000",
+    "test:candidate": "vitest run --testTimeout=30000 test/parse.test.ts test/compatibility.test.ts test/unparse.test.ts test/papa-deviations.test.ts test/papa-upstream-engine.test.ts test/types.test.ts",
+    "bench:smoke": "node bench/run.ts --smoke",
+    "bench:report": "node bench/report.ts",
+    "build": "node scripts/build.mjs",
+    "test:package": "node scripts/verify-package.mjs",
+    "test:browser": "npm run build && playwright test",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm test"
+  },
+  "devDependencies": {
+    "@amigo-labs/csv": "0.1.2",
+    "@eslint/js": "10.0.1",
+    "@fast-csv/format": "5.0.8",
+    "@fast-csv/parse": "5.0.8",
+    "@playwright/test": "1.65.0",
+    "@types/d3-dsv": "3.0.7",
+    "@types/node": "24.19.2",
+    "@types/papaparse": "5.5.2",
+    "@vitest/coverage-v8": "5.0.5",
+    "but-csv": "2.0.14",
+    "chai": "6.3.0",
+    "csv-parse": "7.0.3",
+    "csv-parser": "3.2.1",
+    "csv-pipe": "2.1.0",
+    "csv-rex": "0.7.0",
+    "csv-simple-parser": "2.0.2",
+    "csv-spectrum": "2.0.0",
+    "csv-stringify": "6.9.0",
+    "d3-dsv": "3.0.1",
+    "esbuild": "0.28.2",
+    "eslint": "10.13.0",
+    "papaparse": "5.7.1",
+    "papaparse-5.7.0": "npm:papaparse@5.7.0",
+    "papaparse-5.7.1": "npm:papaparse@5.7.1",
+    "prettier": "3.9.10",
+    "tiddlycsv": "1.0.2",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0",
+    "udsv": "0.7.3",
+    "vite": "8.3.5",
+    "vitest": "5.0.5",
+    "web-csv-toolbox": "0.15.0",
+    "wrangler": "4.160.0"
+  }
+}

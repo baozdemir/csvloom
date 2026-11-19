@@ -1,0 +1,13 @@
+";" 3 rows
+Quoted field unterminated [MissingQuotes] at line 4, column 3 (row 3, offset 30)
+  4 | 3;"Linus;5
+    |   ^
+Too few fields: expected 3 fields but parsed 2 [TooFewFields] at line 3, column 1 (row 1, offset 20)
+  3 | 2;Grace
+    | ^
+Too few fields: expected 3 fields but parsed 2 [TooFewFields] at line 4, column 1 (row 2, offset 28)
+  4 | 3;"Linus;5
+    | ^
+[{"id":"1","name":"Ada","qty":"3"},{"id":"2","name":"Grace","qty":""},{"id":"3","name":"\"Linus","qty":"5"}]
+[{"rule":"pad-missing","line":3},{"rule":"unclosed-quote","line":4},{"rule":"trailing-empty-record","line":4}]
+0 errors left

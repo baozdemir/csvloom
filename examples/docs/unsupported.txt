@@ -1,0 +1,6 @@
+step: UnsupportedFeatureError: "step" is not supported by csvloom
+complete: UnsupportedFeatureError: "complete" is not supported by csvloom
+worker: UnsupportedFeatureError: "worker" is not supported by csvloom
+download: UnsupportedFeatureError: "download" is not supported by csvloom
+encoding: UnsupportedFeatureError: "encoding" is not supported by csvloom
+a File or Blob: UnsupportedFeatureError: "non-string input" is not supported by csvloom

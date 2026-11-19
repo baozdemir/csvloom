@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "method": "pub",
+  "status": "The publication method is method v2 as the manifest named in base has it, with the values below in place of that file's and of the frozen v1 manifest's (Node 26.13.1; no Node flag on the timing processes beyond --expose-gc and the round's seed flags; papaparse 5.7.1). docs/benchmarks.md, \"How the harness measures\", describes it.",
+  "base": {
+    "path": "manifest-v2.json",
+    "sha256": "2ac72f3204f89c9a2b590fcd02bd4e21413277996760c43e687a01e8c0eb1d9e"
+  },
+  "runtime": {
+    "node": "26.13.1"
+  },
+  "competitors": {
+    "papaparse": "5.7.1"
+  },
+  "installedAs": {
+    "papaparse": "papaparse-5.7.1"
+  },
+  "measurement": {
+    "repeatedNodeFlags": []
+  }
+}

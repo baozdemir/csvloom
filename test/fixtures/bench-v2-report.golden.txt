@@ -1,0 +1,84 @@
+# Benchmark report (method v2): campaign c1
+
+COMPLETE campaign.
+
+- Candidate cand: commit c0ffee, bundle SHA-256 dist-sha; A/A arm cand-aa is the same bundle in another directory.
+- Harness commit c0ffee; Node v24.22.1; CPU AMD EPYC 7B12; kernel 6.1.0.
+- Placement: workers pinned with taskset to CPU 3 (threads of its core: 3,7); runner on CPU(s) 2.
+- Campaign seed 20261110 (round order, the V8 seed of each round, per-process checkout copy and pad length, bootstrap).
+- Per implementation and case: 10 fresh processes, 3 samples of at least 250 ms after at least 500 ms and 3 operations of warm-up, each sample after a forced collection and about 250 ms of untimed operations, both counts fixed once per pair from its check; a pair whose check took at least 90 ms takes one operation per sample and no untimed operations instead (one parse on a collected heap), with as many samples as fill about 750 ms, at least 3; the timing processes of a pair that repeats the operation run with --no-osr-from-maglev, those of a one-parse pair without; statistic per process: median.
+- Intervals: 95% percentile bootstrap, 10000 resamples of rounds; the arms of a round ran with the same V8 seed and are resampled together.
+- Placement check (reported, not a gate; sibling busy at most 1.00%, worker steal at most 0.50%): no flag.
+
+## Result
+
+Ratios are competitor time / candidate time: above 1 means cand is faster.
+
+Ahead 1, behind 1, inconclusive 0 of 2 primary cases.
+Overall against the fastest valid competitor (geometric mean, 95% interval): 1.068 [1.065, 1.070]; B1 1.200 [1.195, 1.205]; B2 0.950 [0.946, 0.953].
+Overall against ref: 2.000 [1.996, 2.005].
+
+A case is ahead (behind) when its ratio differs from 1 after Holm correction over the 2 primary cases at 5% and its whole interval lies above (below) the A/A interval of the same case; otherwise it is inconclusive. The fastest competitor is chosen once, from the medians.
+
+## Primary cases (behind first, then inconclusive, then ahead)
+
+| case | fastest valid competitor | ratio [95%] | p | Holm | A/A [95%] | class | ref ratio [95%] | candidate ms | competitor ms |
+|---|---|---|---|---|---|---|---|---|---|
+| B2-a | fast | 0.950 [0.946, 0.953] | 0.0002 | yes | 1.002 [0.998, 1.006] | behind | 2.000 [1.995, 2.008] | 10.01 | 9.51 |
+| B1-a | fast | 1.200 [1.195, 1.205] | 0.0002 | yes | 1.002 [0.998, 1.006] | ahead | 2.000 [1.995, 2.008] | 10.01 | 12.01 |
+
+Timing regimes: a pair whose check took at least 90 ms is timed as one parse per sample on a collected heap, a shorter one by repeated parsing. Rows where cand and a compared side were timed differently: none.
+
+## A/A noise (cand-aa time / cand time)
+
+| case | A/A [95%] | half-width | contains 1 |
+|---|---|---|---|
+| B1-a | 1.002 [0.998, 1.006] | 0.40% | yes |
+| B2-a | 1.002 [0.998, 1.006] | 0.40% | yes |
+
+Noise check: 0 of 2 intervals exclude 1.000 (at most 3); largest half-width 0.40% (limit 2.50%); median half-width 0.40% (limit 1.50%): PASS.
+
+## Memory (single parse, output retained; median of the memory processes)
+
+Peak counter: linux-proc-self-status-VmHWM. Empty process (harness loaded, no parser, no input): RSS 40.0 MiB, peak 42.0 MiB.
+Reported check against ref (a fact, not a gate): worst peak ratio 0.900 (limit 1.10: within).
+
+| case | candidate peak MiB | candidate RSS before parse MiB | ref peak MiB | candidate / ref | lowest-peak competitor | its peak MiB | candidate / lowest |
+|---|---|---|---|---|---|---|---|
+| B1-a | 90.0 | 55.0 | 100.0 | 0.900 | fast | 80.0 | 1.125 |
+| B2-a | 90.0 | 55.0 | 100.0 | 0.900 | fast | 80.0 | 1.125 |
+
+## Small inputs (ref time / candidate time)
+
+Reported check (a fact, not a gate): worst candidate / ref time ratio 0.500 (limit 1.10: within).
+
+| case | ratio [95%] |
+|---|---|
+| B1-small | 2.000 [1.995, 2.008] |
+
+## Every implementation per case (median, minimum and maximum of the process medians)
+
+### B1-a (primary)
+
+| impl | status | median ms | min | max | processes |
+|---|---|---|---|---|---|
+| cand | PASS | 10.01 | 9.92 | 10.09 | 10 |
+| cand-aa | PASS | 10.03 | 9.94 | 10.11 | 10 |
+| fast | PASS | 12.01 | 11.90 | 12.11 | 10 |
+| ref | PASS | 20.02 | 19.84 | 20.18 | 10 |
+
+### B2-a (primary)
+
+| impl | status | median ms | min | max | processes |
+|---|---|---|---|---|---|
+| fast | PASS | 9.51 | 9.42 | 9.59 | 10 |
+| cand | PASS | 10.01 | 9.92 | 10.09 | 10 |
+| cand-aa | PASS | 10.03 | 9.94 | 10.11 | 10 |
+| ref | PASS | 20.02 | 19.84 | 20.18 | 10 |
+
+### B1-small (regression)
+
+| impl | status | median ms | min | max | processes |
+|---|---|---|---|---|---|
+| cand | PASS | 10.01 | 9.92 | 10.09 | 10 |
+| ref | PASS | 20.02 | 19.84 | 20.18 | 10 |

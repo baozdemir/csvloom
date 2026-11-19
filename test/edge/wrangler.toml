@@ -1,0 +1,8 @@
+# Local workerd probe: run only through test/edge/run.mjs, which starts
+# `wrangler dev --local`. No account, route or binding; never deployed.
+name = "csvloom-workerd-probe"
+main = "worker.mjs"
+# The date of the workerd that wrangler 4.160.0 brings (workerd 1.20261110.1); no compatibility
+# flags, so no nodejs_compat.
+compatibility_date = "2026-11-10"
+send_metrics = false

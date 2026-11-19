@@ -1,0 +1,12 @@
+[{"id":"1","name":"Ada","city":""},{"id":"2","name":"Grace","city":"New York"},{"id":"3","name":"Linus","city":"Helsinki"},{"id":"4","name":"\"Alan","city":"Wilmslow"}]
+[]
+{"rule":"mixed-newline","row":-1,"line":1,"column":1,"before":"id,name,city\r","after":[["id","name","city"]]}
+{"rule":"mixed-newline","row":0,"line":2,"column":1,"before":"1,Ada\r","after":[["1","Ada"]]}
+{"rule":"pad-missing","row":0,"line":2,"column":1,"before":"1,Ada\r","after":[["1","Ada",""]]}
+{"rule":"mixed-newline","row":1,"line":3,"column":1,"before":"2,Grace,New York,,\r","after":[["2","Grace","New York","",""]]}
+{"rule":"drop-trailing-empty","row":1,"line":3,"column":1,"before":"2,Grace,New York,,\r","after":[["2","Grace","New York"]]}
+{"rule":"unclosed-quote","row":3,"line":5,"column":1,"before":"4,\"Alan,Wilmslow","after":[["4","\"Alan","Wilmslow"]]}
+{"rule":"trailing-empty-record","row":-1,"line":5,"column":17,"before":"\n","after":[]}
+{"pad-missing":1,"drop-trailing-empty":1,"trailing-empty-record":1,"mixed-newline":3,"unclosed-quote":1}
+["id","name",""] [{"id":"1","name":"Ada","":""},{"id":"2","name":"Grace","":""}]
+{"pad-missing":2,"drop-trailing-empty":0,"trailing-empty-record":1,"mixed-newline":0,"unclosed-quote":0}

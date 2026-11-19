@@ -1,0 +1,6 @@
+{"delimiter":";","newline":"\n","header":true,"preamble":"Sales report 2026\nRegion: north\n","preambleLines":2,"start":32,"columns":3}
+[{"id":"1","name":"Ada","amount":"1,5"},{"id":"2","name":"Grace","amount":"2,25"}]
+"Sales report 2026\nRegion: north\n"
+["Sales report 2026"] 3 errors
+{"name":"utf-16le","evidence":"bom"}
+{"name":"utf-8","evidence":"valid"}

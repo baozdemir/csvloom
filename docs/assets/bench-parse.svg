@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="412" viewBox="0 0 760 412" role="img" aria-labelledby="title desc">
+<title id="title">Parsing speed relative to Papa Parse</title>
+<desc id="desc">Horizontal bar chart. For each library, the geometric mean over 24 parse cases of Papa Parse's time divided by the library's time: Papa Parse is 1, and higher is faster. csvloom 2.60, csv-simple-parser 1.95, udsv 1.94, csv-pipe 1.66, d3-dsv 1.41, csv-rex 1.04, Papa Parse 1.00, amigo-labs-csv 0.68, csv-parse 0.49, fast-csv 0.28. amigo-labs-csv is a native addon that runs only in Node.</desc>
+<g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" fill="#6e7781">
+<text x="0" y="22" font-size="17" font-weight="700">Parsing speed relative to Papa Parse</text>
+<text x="0" y="46" font-size="13">Geometric mean over 24 cases: six kinds of CSV, 1 MiB and 32 MiB, rows as arrays and as objects.</text>
+<text x="0" y="64" font-size="13">Papa Parse's time divided by each library's: Papa Parse is 1×, and higher is faster.</text>
+<line x1="186" y1="380" x2="666" y2="380" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<line x1="186" y1="380" x2="186" y2="384" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="186" y="398" font-size="12" text-anchor="middle">0×</text>
+<line x1="346" y1="380" x2="346" y2="384" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="346" y="398" font-size="12" text-anchor="middle">1×</text>
+<line x1="506" y1="380" x2="506" y2="384" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="506" y="398" font-size="12" text-anchor="middle">2×</text>
+<line x1="666" y1="380" x2="666" y2="384" stroke="#6e7781" stroke-opacity="0.5" stroke-width="1"/>
+<text x="666" y="398" font-size="12" text-anchor="middle">3×</text>
+<text x="176" y="98" font-size="14" text-anchor="end" font-weight="700">csvloom</text>
+<path d="M186 84h411.4a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-411.4z" fill="#2f7ee0"/>
+<text x="609.4" y="98" font-size="14" font-weight="700">2.60×</text>
+<text x="176" y="128" font-size="14" text-anchor="end" font-weight="600">csv-simple-parser</text>
+<path d="M186 114h308.1a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-308.1z" fill="#868e96"/>
+<text x="506.1" y="128" font-size="14" font-weight="600">1.95×</text>
+<text x="176" y="158" font-size="14" text-anchor="end" font-weight="600">udsv</text>
+<path d="M186 144h307a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-307z" fill="#868e96"/>
+<text x="505" y="158" font-size="14" font-weight="600">1.94×</text>
+<text x="176" y="188" font-size="14" text-anchor="end" font-weight="600">csv-pipe</text>
+<path d="M186 174h261.9a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-261.9z" fill="#868e96"/>
+<text x="459.9" y="188" font-size="14" font-weight="600">1.66×</text>
+<text x="176" y="218" font-size="14" text-anchor="end" font-weight="600">d3-dsv</text>
+<path d="M186 204h222a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-222z" fill="#868e96"/>
+<text x="420" y="218" font-size="14" font-weight="600">1.41×</text>
+<text x="176" y="248" font-size="14" text-anchor="end" font-weight="600">csv-rex</text>
+<path d="M186 234h162.3a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-162.3z" fill="#868e96"/>
+<text x="360.3" y="248" font-size="14" font-weight="600">1.04×</text>
+<text x="176" y="278" font-size="14" text-anchor="end" font-weight="700">Papa Parse</text>
+<path d="M186 264h156a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-156z" fill="#bf8700"/>
+<text x="354" y="278" font-size="14" font-weight="700">1.00×<tspan font-size="12" font-weight="400" dx="8">the baseline</tspan></text>
+<text x="176" y="308" font-size="14" text-anchor="end" font-weight="600">amigo-labs-csv</text>
+<path d="M186 294h105.2a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-105.2z" fill="#868e96"/>
+<text x="303.2" y="308" font-size="14" font-weight="600">0.68×<tspan font-size="12" font-weight="400" dx="8">native addon, Node only</tspan></text>
+<text x="176" y="338" font-size="14" text-anchor="end" font-weight="600">csv-parse</text>
+<path d="M186 324h74a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-74z" fill="#868e96"/>
+<text x="272" y="338" font-size="14" font-weight="600">0.49×</text>
+<text x="176" y="368" font-size="14" text-anchor="end" font-weight="600">fast-csv</text>
+<path d="M186 354h40.4a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-40.4z" fill="#868e96"/>
+<text x="238.4" y="368" font-size="14" font-weight="600">0.28×</text>
+</g>
+</svg>

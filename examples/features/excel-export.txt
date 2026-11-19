@@ -1,0 +1,5 @@
+"[BOM]name,city,amount\r\nÇağrı Işık,İstanbul,\"1,5\"\r\nZoë,Zürich,\"'=SUM(A1:A2)\""
+"[BOM]name;city;amount\r\nÇağrı Işık;İstanbul;1,5\r\nZoë;Zürich;\"'=SUM(A1:A2)\""
+"sep=;\r\nname;city;amount\r\nÇağrı Işık;İstanbul;1,5\r\nZoë;Zürich;\"'=SUM(A1:A2)\""
+[["name","city","amount"],["Çağrı Işık","İstanbul","1,5"],["Zoë","Zürich","'=SUM(A1:A2)"]]
+[["name","city","amount"],["Çağrı Işık","İstanbul","1,5"],["Zoë","Zürich","'=SUM(A1:A2)"]] ; true

@@ -1,0 +1,1007 @@
+{
+  "schemaVersion": 2,
+  "status": "Frozen: the cases, fixtures, implementations, declared-unsupported pairs, shards, limits and scoring of method v1. bench/manifest-v2.json names this file by SHA-256 and takes its cases, fixtures, implementations, declared-unsupported pairs and shards from it; a run under a file with other values is a run of another manifest.",
+  "runtime": {
+    "node": "24.22.1",
+    "flags": ["--expose-gc"],
+    "note": "method v1's benchmark runtime; its campaign shards refuse any other Node version. The publication method (bench/manifest-pub.json) runs Node 26.13.1."
+  },
+  "reference": "papaparse",
+  "candidate": "csv-engine",
+  "candidateDeferredLanes": {
+    "S1": "method v1 has no candidate S1 adapter; the candidate's S1 cases run under method v2 (bench/manifest-v2.json, s1)"
+  },
+  "consensus": ["papaparse", "d3-dsv"],
+  "competitors": {
+    "papaparse": "5.7.0",
+    "csv-parse": "7.0.3",
+    "csv-parser": "3.2.1",
+    "@fast-csv/parse": "5.0.8",
+    "d3-dsv": "3.0.1",
+    "udsv": "0.7.3",
+    "csv-simple-parser": "2.0.2",
+    "csv-rex": "0.7.0",
+    "csv-pipe": "2.1.0",
+    "@amigo-labs/csv": "0.1.2",
+    "but-csv": "2.0.14",
+    "tiddlycsv": "1.0.2",
+    "web-csv-toolbox": "0.15.0"
+  },
+  "implementations": [
+    {
+      "id": "papaparse",
+      "package": "papaparse",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "papaparse-fastmode",
+      "package": "papaparse",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "csv-parse",
+      "package": "csv-parse",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "csv-parser",
+      "package": "csv-parser",
+      "lanes": ["B2", "S1"],
+      "missingLanes": {
+        "B1": "emits objects only (index-keyed with headers: false)"
+      }
+    },
+    {
+      "id": "fast-csv",
+      "package": "@fast-csv/parse",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "d3-dsv",
+      "package": "d3-dsv",
+      "lanes": ["B1", "B2"],
+      "missingLanes": {
+        "S1": "no incremental API"
+      }
+    },
+    {
+      "id": "udsv",
+      "package": "udsv",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "csv-simple-parser",
+      "package": "csv-simple-parser",
+      "lanes": ["B1", "B2"],
+      "missingLanes": {
+        "S1": "no incremental API"
+      }
+    },
+    {
+      "id": "csv-rex",
+      "package": "csv-rex",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "csv-pipe",
+      "package": "csv-pipe",
+      "lanes": ["B1", "B2", "S1"]
+    },
+    {
+      "id": "amigo-labs-csv",
+      "package": "@amigo-labs/csv",
+      "lanes": ["B1", "B2"],
+      "missingLanes": {
+        "S1": "no streaming API"
+      }
+    },
+    {
+      "id": "but-csv",
+      "package": "but-csv",
+      "lanes": ["B1"],
+      "missingLanes": {
+        "B2": "no header API",
+        "S1": "no incremental API"
+      }
+    },
+    {
+      "id": "tiddlycsv",
+      "package": "tiddlycsv",
+      "lanes": ["B1"],
+      "missingLanes": {
+        "B2": "no header API",
+        "S1": "text-chunk API without headers; not adapted"
+      }
+    },
+    {
+      "id": "web-csv-toolbox",
+      "package": "web-csv-toolbox",
+      "lanes": ["B2", "S1"],
+      "missingLanes": {
+        "B1": "arrays with the header row kept need lower-level factories; not adapted"
+      }
+    }
+  ],
+  "unsupported": [
+    {
+      "impl": "papaparse-fastmode",
+      "families": ["quote-heavy", "multiline", "unicode", "long-field"],
+      "cases": ["B1-ext-nga-text-entries", "B1-ext-tate-artwork"],
+      "reason": "fastMode: true treats quotes as literal characters; this variant is only for unquoted input"
+    },
+    {
+      "impl": "but-csv",
+      "cases": ["B1-ext-geonames-cities1000"],
+      "reason": "hard-wired to ',' and '\"'; the case is tab-separated"
+    },
+    {
+      "impl": "tiddlycsv",
+      "cases": ["B1-ext-geonames-cities1000"],
+      "reason": "hard-wired to ',' and '\"'; the case is tab-separated"
+    }
+  ],
+  "unavailable": [
+    {
+      "package": "@rip-lang/csv",
+      "version": "1.3.122",
+      "reason": "Rip-language source only (ERR_UNKNOWN_FILE_EXTENSION in Node); the compiler is Bun-only. A comparison limitation, not evidence of speed."
+    },
+    {
+      "package": "@rs-csv/core",
+      "version": "0.0.1-rc.0 (latest), 0.0.1-rc.3 (next)",
+      "reason": "MODULE_NOT_FOUND: published tarballs contain no dist/ entry"
+    },
+    {
+      "package": "cisv",
+      "version": "0.4.12",
+      "reason": "install script compiles sources absent from the tarball; shipped binary is Linux x86-64"
+    },
+    {
+      "package": "turbocsv",
+      "version": "0.3.4",
+      "reason": "Bun-only (bun:ffi, import.meta.require); no WASM build"
+    }
+  ],
+  "measurement": {
+    "warmupMs": 500,
+    "minWarmupOps": 3,
+    "samples": 7,
+    "minSampleMs": 250,
+    "repetitions": 3,
+    "s1ChunkBytes": 65536,
+    "orderSeed": 20261026,
+    "gcBetweenSamples": true
+  },
+  "scoring": {
+    "speedup": "fastest_valid_competitor_median_i / candidate_median_i",
+    "overall": "exp(sum(weight_i * ln(speedup_i)) / sum(weight_i)) over primary cases",
+    "caseMedian": "median of the per-repetition medians",
+    "inconclusiveSpread": 0.1,
+    "reportedChecks": {
+      "smallInputVsReferenceMax": 0.1,
+      "peakMemoryVsReferenceMax": 0.1
+    },
+    "memoryMetric": "absolute process peak RSS (OS maxRSS) of a separate process that loads the same cached input file and keeps the full bulk output alive until the peak is read; candidate / reference per primary case"
+  },
+  "limits": {
+    "rssLimitBytes": 6442450944,
+    "rssPollMs": 1000,
+    "diskFloorBytes": 3221225472,
+    "tempCapBytes": 1073741824,
+    "tempCapExpandedBytes": 2147483648,
+    "expandCapAtFreeBytes": 16106127360
+  },
+  "campaign": {
+    "maxShardMinutes": 30,
+    "maxCampaignMinutes": 120,
+    "estimateMinutes": 86.5,
+    "estimateNote": "provisional: 79.1 min for competitors from a smoke run on a loaded machine, plus the candidate assumed to cost as much as papaparse on every pair it must run; 32 MiB and external costs extrapolated linearly; largest shard 22.2 min; only PASS pairs are timed",
+    "shards": [
+      {
+        "id": "S1",
+        "cases": [
+          "B2-wide-32MiB",
+          "B1-unicode-32MiB",
+          "B1-ext-nga-text-entries",
+          "B2-simple-1MiB",
+          "B2-multiline-1MiB",
+          "B1-quote-heavy-1MiB",
+          "S1-wide-1MiB",
+          "S1-multiline-1MiB",
+          "B2-quote-heavy-1KiB",
+          "B1-unicode-1KiB"
+        ]
+      },
+      {
+        "id": "S2",
+        "cases": [
+          "B2-simple-32MiB",
+          "B1-simple-32MiB",
+          "B2-long-field-32MiB",
+          "B2-wide-1MiB",
+          "B2-quote-heavy-1MiB",
+          "B2-long-field-1MiB",
+          "B1-long-field-1MiB",
+          "S1-quote-heavy-1MiB",
+          "B1-simple-64KiB",
+          "B2-simple-1KiB",
+          "B2-multiline-1KiB",
+          "B1-multiline-1KiB"
+        ]
+      },
+      {
+        "id": "S3",
+        "cases": [
+          "B2-unicode-32MiB",
+          "B2-multiline-32MiB",
+          "B1-multiline-32MiB",
+          "B1-ext-geonames-cities1000",
+          "B1-ext-tate-artwork",
+          "B1-wide-1MiB",
+          "B1-unicode-1MiB",
+          "S1-simple-1MiB",
+          "S1-long-field-1MiB",
+          "B1-quote-heavy-1KiB"
+        ]
+      },
+      {
+        "id": "S4",
+        "cases": [
+          "B2-quote-heavy-32MiB",
+          "B1-wide-32MiB",
+          "B1-quote-heavy-32MiB",
+          "B1-long-field-32MiB",
+          "B2-unicode-1MiB",
+          "B1-simple-1MiB",
+          "B1-multiline-1MiB",
+          "S1-unicode-1MiB",
+          "B2-simple-64KiB",
+          "B2-unicode-64KiB",
+          "B2-quote-heavy-64KiB",
+          "B1-quote-heavy-64KiB",
+          "B2-multiline-64KiB",
+          "B1-unicode-64KiB",
+          "B1-multiline-64KiB",
+          "B2-unicode-1KiB",
+          "B1-simple-1KiB"
+        ]
+      }
+    ],
+    "coldStartShard": "S1",
+    "coldStartCase": "B1-simple-1KiB"
+  },
+  "families": {
+    "simple": {
+      "seed": 20261026,
+      "description": "ASCII, 8 columns, no quoting needed, LF"
+    },
+    "quote-heavy": {
+      "seed": 20261027,
+      "description": "8 columns, embedded commas and doubled quotes, half of plain fields also quoted, CRLF"
+    },
+    "multiline": {
+      "seed": 20261028,
+      "description": "6 columns, LF and CRLF inside quoted fields, LF records"
+    },
+    "wide": {
+      "seed": 20261029,
+      "description": "256 numeric-like columns, 20% empty, no quotes, LF"
+    },
+    "unicode": {
+      "seed": 20261030,
+      "description": "Turkish, CJK, Cyrillic, Arabic, Hebrew, Indic, emoji (ZWJ, flags), combining marks; some quoted, LF"
+    },
+    "long-field": {
+      "seed": 20261031,
+      "description": "4 columns, one 8-64 KiB quoted field per record with commas, quotes and newlines, LF"
+    }
+  },
+  "cases": [
+    {
+      "id": "B1-simple-1MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "simple",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048633,
+        "rows": 18939,
+        "columns": 8,
+        "sha256": "d5ea9edb2549f4f2f86235dd87a7f779b006b2d567e6b71dd7ce9a9ecda175c5"
+      }
+    },
+    {
+      "id": "B1-simple-32MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "simple",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554460,
+        "rows": 592037,
+        "columns": 8,
+        "sha256": "6c30edde929db9da930e7f7bf128e62d4ad3fcce169eeb94e23f0b5d396d126e"
+      }
+    },
+    {
+      "id": "B1-quote-heavy-1MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "quote-heavy",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048677,
+        "rows": 7751,
+        "columns": 8,
+        "sha256": "394ffd2c67447f325467348faeb093286ad456b4a1f5fc7f68077e22fa3bf6ca"
+      }
+    },
+    {
+      "id": "B1-quote-heavy-32MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "quote-heavy",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554548,
+        "rows": 244873,
+        "columns": 8,
+        "sha256": "84b29a80362061f5a6741d51298e2d383aad38ed7f37cac7291cbe441ea1ce05"
+      }
+    },
+    {
+      "id": "B1-multiline-1MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "multiline",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048604,
+        "rows": 10461,
+        "columns": 6,
+        "sha256": "de9797a5160764bca341c9da9b81d7ceed64263a484345ddcb1abdaf16f7d7d5"
+      }
+    },
+    {
+      "id": "B1-multiline-32MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "multiline",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554477,
+        "rows": 329562,
+        "columns": 6,
+        "sha256": "917e516e431e80e5ea1f9440f9e5c14f85511eddfe449526657e001cee177ed7"
+      }
+    },
+    {
+      "id": "B1-wide-1MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "wide",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1049137,
+        "rows": 833,
+        "columns": 256,
+        "sha256": "cad3907070f71c5842ac66fa247c3e3209b02c3fdc794e71b2d6dcfc5e3786cf"
+      }
+    },
+    {
+      "id": "B1-wide-32MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "wide",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554873,
+        "rows": 26688,
+        "columns": 256,
+        "sha256": "6f43559246aa66e233602b553e538f680cf968f3caeed2295a77fbc1482ae5ac"
+      }
+    },
+    {
+      "id": "B1-unicode-1MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "unicode",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048613,
+        "rows": 9253,
+        "columns": 8,
+        "sha256": "836c897f53762a3e149deb1404ed5ed45678c164d1b062eca4328dd4b0aa4a7d"
+      }
+    },
+    {
+      "id": "B1-unicode-32MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "unicode",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554537,
+        "rows": 291286,
+        "columns": 8,
+        "sha256": "5f6abc24de4ee84da1c7b388eedf6aaa2226d8f915d1e3ca5b15ba953aecf1fe"
+      }
+    },
+    {
+      "id": "B1-long-field-1MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "long-field",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1063814,
+        "rows": 29,
+        "columns": 4,
+        "sha256": "c44cc06617ba4dce97068afb27776bda6a2439620fbaa7ddd601d68422f0e4bc"
+      }
+    },
+    {
+      "id": "B1-long-field-32MiB",
+      "lane": "B1",
+      "class": "primary",
+      "weight": 1,
+      "family": "long-field",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33593211,
+        "rows": 901,
+        "columns": 4,
+        "sha256": "32402480cfb296eb018d46a05cfa0a8a98ccbfc84bb8b7e6f12775f451edefed"
+      }
+    },
+    {
+      "id": "B2-simple-1MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "simple",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048633,
+        "rows": 18939,
+        "columns": 8,
+        "sha256": "d5ea9edb2549f4f2f86235dd87a7f779b006b2d567e6b71dd7ce9a9ecda175c5"
+      }
+    },
+    {
+      "id": "B2-simple-32MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "simple",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554460,
+        "rows": 592037,
+        "columns": 8,
+        "sha256": "6c30edde929db9da930e7f7bf128e62d4ad3fcce169eeb94e23f0b5d396d126e"
+      }
+    },
+    {
+      "id": "B2-quote-heavy-1MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "quote-heavy",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048677,
+        "rows": 7751,
+        "columns": 8,
+        "sha256": "394ffd2c67447f325467348faeb093286ad456b4a1f5fc7f68077e22fa3bf6ca"
+      }
+    },
+    {
+      "id": "B2-quote-heavy-32MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "quote-heavy",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554548,
+        "rows": 244873,
+        "columns": 8,
+        "sha256": "84b29a80362061f5a6741d51298e2d383aad38ed7f37cac7291cbe441ea1ce05"
+      }
+    },
+    {
+      "id": "B2-multiline-1MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "multiline",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048604,
+        "rows": 10461,
+        "columns": 6,
+        "sha256": "de9797a5160764bca341c9da9b81d7ceed64263a484345ddcb1abdaf16f7d7d5"
+      }
+    },
+    {
+      "id": "B2-multiline-32MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "multiline",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554477,
+        "rows": 329562,
+        "columns": 6,
+        "sha256": "917e516e431e80e5ea1f9440f9e5c14f85511eddfe449526657e001cee177ed7"
+      }
+    },
+    {
+      "id": "B2-wide-1MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "wide",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1049137,
+        "rows": 833,
+        "columns": 256,
+        "sha256": "cad3907070f71c5842ac66fa247c3e3209b02c3fdc794e71b2d6dcfc5e3786cf"
+      }
+    },
+    {
+      "id": "B2-wide-32MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "wide",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554873,
+        "rows": 26688,
+        "columns": 256,
+        "sha256": "6f43559246aa66e233602b553e538f680cf968f3caeed2295a77fbc1482ae5ac"
+      }
+    },
+    {
+      "id": "B2-unicode-1MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "unicode",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048613,
+        "rows": 9253,
+        "columns": 8,
+        "sha256": "836c897f53762a3e149deb1404ed5ed45678c164d1b062eca4328dd4b0aa4a7d"
+      }
+    },
+    {
+      "id": "B2-unicode-32MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "unicode",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33554537,
+        "rows": 291286,
+        "columns": 8,
+        "sha256": "5f6abc24de4ee84da1c7b388eedf6aaa2226d8f915d1e3ca5b15ba953aecf1fe"
+      }
+    },
+    {
+      "id": "B2-long-field-1MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "long-field",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1063814,
+        "rows": 29,
+        "columns": 4,
+        "sha256": "c44cc06617ba4dce97068afb27776bda6a2439620fbaa7ddd601d68422f0e4bc"
+      }
+    },
+    {
+      "id": "B2-long-field-32MiB",
+      "lane": "B2",
+      "class": "primary",
+      "weight": 1,
+      "family": "long-field",
+      "targetBytes": 33554432,
+      "fixture": {
+        "bytes": 33593211,
+        "rows": 901,
+        "columns": 4,
+        "sha256": "32402480cfb296eb018d46a05cfa0a8a98ccbfc84bb8b7e6f12775f451edefed"
+      }
+    },
+    {
+      "id": "B1-simple-1KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "simple",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1046,
+        "rows": 20,
+        "columns": 8,
+        "sha256": "a10810e4e656ffeca2cd183ff59b85363f303f662c9b2c619e607c039e8ff3cb"
+      }
+    },
+    {
+      "id": "B1-simple-64KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "simple",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65537,
+        "rows": 1203,
+        "columns": 8,
+        "sha256": "7c09f82fd9ab4731a9d460b9a965e8c4ff8613b9d040d924e21de391c8cf09f0"
+      }
+    },
+    {
+      "id": "B1-quote-heavy-1KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "quote-heavy",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1093,
+        "rows": 8,
+        "columns": 8,
+        "sha256": "5848444718768ab1ed84537ba45c4d1a1249411e81297341e7e33cb59d21e06c"
+      }
+    },
+    {
+      "id": "B1-quote-heavy-64KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "quote-heavy",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65644,
+        "rows": 493,
+        "columns": 8,
+        "sha256": "7b7e0958c39539b36f8b63d95b0df9b8da9b655088174cfe923d9fe618737bc0"
+      }
+    },
+    {
+      "id": "B1-multiline-1KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "multiline",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1050,
+        "rows": 11,
+        "columns": 6,
+        "sha256": "a402ef8d5dd83734a9e018b28e95e921c6261d45a1a53f954c1fec33144f37b5"
+      }
+    },
+    {
+      "id": "B1-multiline-64KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "multiline",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65565,
+        "rows": 667,
+        "columns": 6,
+        "sha256": "eaba09bbd7e8ef7ecc5a3830b21ccd5c5c80886faa31e78e4189f22b12625cf2"
+      }
+    },
+    {
+      "id": "B1-unicode-1KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "unicode",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1033,
+        "rows": 9,
+        "columns": 8,
+        "sha256": "d8594f7ebd3976f29329b3525cf01b0e07222190e3360ea04e62e0ef0292dc44"
+      }
+    },
+    {
+      "id": "B1-unicode-64KiB",
+      "lane": "B1",
+      "class": "regression",
+      "weight": 0,
+      "family": "unicode",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65610,
+        "rows": 587,
+        "columns": 8,
+        "sha256": "dc1fc3514794d99a37e715fb4d9066f13c366bf1af6c503c0ac3b238ad35623b"
+      }
+    },
+    {
+      "id": "B2-simple-1KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "simple",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1046,
+        "rows": 20,
+        "columns": 8,
+        "sha256": "a10810e4e656ffeca2cd183ff59b85363f303f662c9b2c619e607c039e8ff3cb"
+      }
+    },
+    {
+      "id": "B2-simple-64KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "simple",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65537,
+        "rows": 1203,
+        "columns": 8,
+        "sha256": "7c09f82fd9ab4731a9d460b9a965e8c4ff8613b9d040d924e21de391c8cf09f0"
+      }
+    },
+    {
+      "id": "B2-quote-heavy-1KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "quote-heavy",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1093,
+        "rows": 8,
+        "columns": 8,
+        "sha256": "5848444718768ab1ed84537ba45c4d1a1249411e81297341e7e33cb59d21e06c"
+      }
+    },
+    {
+      "id": "B2-quote-heavy-64KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "quote-heavy",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65644,
+        "rows": 493,
+        "columns": 8,
+        "sha256": "7b7e0958c39539b36f8b63d95b0df9b8da9b655088174cfe923d9fe618737bc0"
+      }
+    },
+    {
+      "id": "B2-multiline-1KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "multiline",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1050,
+        "rows": 11,
+        "columns": 6,
+        "sha256": "a402ef8d5dd83734a9e018b28e95e921c6261d45a1a53f954c1fec33144f37b5"
+      }
+    },
+    {
+      "id": "B2-multiline-64KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "multiline",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65565,
+        "rows": 667,
+        "columns": 6,
+        "sha256": "eaba09bbd7e8ef7ecc5a3830b21ccd5c5c80886faa31e78e4189f22b12625cf2"
+      }
+    },
+    {
+      "id": "B2-unicode-1KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "unicode",
+      "targetBytes": 1024,
+      "fixture": {
+        "bytes": 1033,
+        "rows": 9,
+        "columns": 8,
+        "sha256": "d8594f7ebd3976f29329b3525cf01b0e07222190e3360ea04e62e0ef0292dc44"
+      }
+    },
+    {
+      "id": "B2-unicode-64KiB",
+      "lane": "B2",
+      "class": "regression",
+      "weight": 0,
+      "family": "unicode",
+      "targetBytes": 65536,
+      "fixture": {
+        "bytes": 65610,
+        "rows": 587,
+        "columns": 8,
+        "sha256": "dc1fc3514794d99a37e715fb4d9066f13c366bf1af6c503c0ac3b238ad35623b"
+      }
+    },
+    {
+      "id": "S1-simple-1MiB",
+      "lane": "S1",
+      "class": "additional",
+      "weight": 0,
+      "family": "simple",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048633,
+        "rows": 18939,
+        "columns": 8,
+        "sha256": "d5ea9edb2549f4f2f86235dd87a7f779b006b2d567e6b71dd7ce9a9ecda175c5"
+      }
+    },
+    {
+      "id": "S1-quote-heavy-1MiB",
+      "lane": "S1",
+      "class": "additional",
+      "weight": 0,
+      "family": "quote-heavy",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048677,
+        "rows": 7751,
+        "columns": 8,
+        "sha256": "394ffd2c67447f325467348faeb093286ad456b4a1f5fc7f68077e22fa3bf6ca"
+      }
+    },
+    {
+      "id": "S1-multiline-1MiB",
+      "lane": "S1",
+      "class": "additional",
+      "weight": 0,
+      "family": "multiline",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048604,
+        "rows": 10461,
+        "columns": 6,
+        "sha256": "de9797a5160764bca341c9da9b81d7ceed64263a484345ddcb1abdaf16f7d7d5"
+      }
+    },
+    {
+      "id": "S1-wide-1MiB",
+      "lane": "S1",
+      "class": "additional",
+      "weight": 0,
+      "family": "wide",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1049137,
+        "rows": 833,
+        "columns": 256,
+        "sha256": "cad3907070f71c5842ac66fa247c3e3209b02c3fdc794e71b2d6dcfc5e3786cf"
+      }
+    },
+    {
+      "id": "S1-unicode-1MiB",
+      "lane": "S1",
+      "class": "additional",
+      "weight": 0,
+      "family": "unicode",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1048613,
+        "rows": 9253,
+        "columns": 8,
+        "sha256": "836c897f53762a3e149deb1404ed5ed45678c164d1b062eca4328dd4b0aa4a7d"
+      }
+    },
+    {
+      "id": "S1-long-field-1MiB",
+      "lane": "S1",
+      "class": "additional",
+      "weight": 0,
+      "family": "long-field",
+      "targetBytes": 1048576,
+      "fixture": {
+        "bytes": 1063814,
+        "rows": 29,
+        "columns": 4,
+        "sha256": "c44cc06617ba4dce97068afb27776bda6a2439620fbaa7ddd601d68422f0e4bc"
+      }
+    },
+    {
+      "id": "B1-ext-nga-text-entries",
+      "lane": "B1",
+      "class": "additional",
+      "weight": 0,
+      "external": {
+        "path": "work/data/external/nga-objects_text_entries.csv",
+        "sha256": "7ce34b9945e9c90ca48707d90e5fd93cbb7f20cd77ef981e2d70bea0a8f4f1c1",
+        "bytes": 37109476,
+        "dialect": {
+          "delimiter": ",",
+          "quote": "\"",
+          "newline": "\n"
+        },
+        "source": "https://raw.githubusercontent.com/NationalGalleryOfArt/opendata/8845ce461ef817a55225af57d4689e3c13c37a99/data/objects_text_entries.csv",
+        "license": "CC0 1.0 (National Gallery of Art opendata README at the same commit)",
+        "notes": "LF records; 2304 CR characters, all inside quoted multiline fields; 4 columns with header"
+      }
+    },
+    {
+      "id": "B1-ext-geonames-cities1000",
+      "lane": "B1",
+      "class": "additional",
+      "weight": 0,
+      "external": {
+        "path": "work/data/external/geonames-cities1000.txt",
+        "sha256": "1fc2d01fb7d94b140eb5d8476ff11af15bcb4069ffcb128cf4f635322c1fb2b4",
+        "bytes": 32037359,
+        "dialect": {
+          "delimiter": "\t",
+          "quote": "\"",
+          "newline": "\n"
+        },
+        "source": "https://download.geonames.org/export/dump/cities1000.zip (moving URL; zip sha256 289fa72adcf173bdd3ae23b12f2e4a63d29c096877eb3eba54a595fa26abc73f, Last-Modified Mon, 26 Oct 2026 02:48:44 GMT, ETag \"a91d92-65eb55e4f8055\")",
+        "license": "CC BY 4.0 (GeoNames readme.txt); credit GeoNames when shared",
+        "notes": "Tab-separated, no header row, no quoting by format; 4 double quotes appear mid-field in one record; heavy multi-script Unicode"
+      },
+      "adapterOptions": {
+        "csv-parse": {
+          "relax_quotes": true
+        }
+      }
+    },
+    {
+      "id": "B1-ext-tate-artwork",
+      "lane": "B1",
+      "class": "additional",
+      "weight": 0,
+      "external": {
+        "path": "work/data/external/tate-artwork_data.csv",
+        "sha256": "3fb68c02725846b540a86fa9629de8b0a6902659378e853af0691bc5ff74f09d",
+        "bytes": 24353266,
+        "dialect": {
+          "delimiter": ",",
+          "quote": "\"",
+          "newline": "\r\n"
+        },
+        "source": "https://raw.githubusercontent.com/tategallery/collection/e7936a63d954d5b17628c59990531d723d2da010/artwork_data.csv",
+        "license": "CC0 1.0 (README and LICENCE at the same commit)",
+        "notes": "UTF-8 with one leading BOM (an encoding marker under the lane BOM policy), CRLF, 20 columns with header, quoted commas, text-heavy; repository no longer maintained"
+      }
+    }
+  ]
+}

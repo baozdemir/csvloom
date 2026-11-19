@@ -1,0 +1,887 @@
+{
+  "schemaVersion": 3,
+  "method": "v2",
+  "status": "Method v2: how runs are timed and decided. Cases, fixtures, implementations, declared-unsupported pairs and shards come from the frozen v1 manifest named in base. The report reads a run made under other values as a run of another manifest and gives it no result.",
+  "base": {
+    "path": "manifest.json",
+    "sha256": "d7581c13f2a50f5e126bbe697ae6131c6aad253deb437f493346cbf64ee93e5b"
+  },
+  "measurement": {
+    "processes": 20,
+    "samples": 3,
+    "minSampleMs": 250,
+    "warmupMs": 500,
+    "minWarmupOps": 3,
+    "rewarmMs": 250,
+    "singleOperationMinMs": 90,
+    "singleOperationSampledMs": 750,
+    "repeatedNodeFlags": ["--no-osr-from-maglev"],
+    "processStatistic": "median",
+    "memoryProcesses": 5,
+    "memoryShard": "M"
+  },
+  "candidate": {
+    "distDir": "dist",
+    "entry": "index.js",
+    "buildCommand": ["node", "scripts/build.mjs"]
+  },
+  "aa": {
+    "impl": "csv-engine-aa",
+    "distDir": "twin"
+  },
+  "setup": {
+    "copies": ["c1", "c2/d/e", "c3/d/e/f/g"],
+    "padEnv": "CSV_BENCH_PAD",
+    "padMaxLength": 4096
+  },
+  "seeds": {
+    "scope": "round",
+    "flags": ["--random-seed", "--hash-seed"],
+    "min": 1,
+    "max": 2147483647
+  },
+  "placement": {
+    "tool": "taskset",
+    "requiredFor": ["campaign", "calibration", "ab"],
+    "reportedChecks": {
+      "siblingBusyMax": 0.01,
+      "stealMax": 0.005
+    }
+  },
+  "statistics": {
+    "bootstrapResamples": 10000,
+    "confidence": 0.95,
+    "familyWiseAlpha": 0.05
+  },
+  "calibration": {
+    "maxIntervalsExcludingOne": 3,
+    "maxHalfWidth": 0.025,
+    "maxMedianHalfWidth": 0.015
+  },
+  "ab": {
+    "minProcesses": 10,
+    "targetUpperBelow": 0.98,
+    "otherLowerAbove": 1.01
+  },
+  "budget": {
+    "defaultMinutes": 240,
+    "dryRun": {
+      "targetBytes": 1048576,
+      "checkFamily": "simple",
+      "samples": 1,
+      "minSampleMs": 50,
+      "warmupMs": 150
+    }
+  },
+  "limits": {
+    "rssLimitBytes": 6442450944,
+    "rssPollMs": 1000,
+    "diskFloorBytes": 3221225472,
+    "tempCapBytes": 4294967296
+  },
+  "w1": {
+    "status": "The W1 lane (rows or records to one CSV string), run with --lane W1. Its cases are primary with weight 1 inside W1 only and never enter a B1/B2 or S1 run or score; each uses the frozen v1 fixture of its family and size. The candidate's W1 function passes escapeFormulae: false, so W1 measures the same work as the other writers whatever the main entry's default is. Arm beside the candidate on every W1 case: csv-engine (default-on), the same bundle with unparse called without escapeFormulae (the entry's default); a diagnostic, reported in its own table, never in W1's score, never the fastest competitor, and never in an A/B.",
+    "arms": {
+      "csv-engine (default-on)": { "omitEscapeFormulae": true }
+    },
+    "competitors": {
+      "papaparse": "5.7.0",
+      "csv-parse": "7.0.3",
+      "csv-parser": "3.2.1",
+      "@fast-csv/parse": "5.0.8",
+      "d3-dsv": "3.0.1",
+      "udsv": "0.7.3",
+      "csv-simple-parser": "2.0.2",
+      "csv-rex": "0.7.0",
+      "csv-pipe": "2.1.0",
+      "@amigo-labs/csv": "0.1.2",
+      "but-csv": "2.0.14",
+      "tiddlycsv": "1.0.2",
+      "web-csv-toolbox": "0.15.0",
+      "csv-stringify": "6.9.0",
+      "@fast-csv/format": "5.0.8"
+    },
+    "implementations": [
+      {
+        "id": "papaparse",
+        "package": "papaparse",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "papaparse-fastmode",
+        "package": "papaparse",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "fastMode is a parse option; Papa.unparse is measured once, as papaparse"
+        }
+      },
+      {
+        "id": "csv-parse",
+        "package": "csv-parse",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "parser only; the csv project writes with csv-stringify, measured as csv-stringify"
+        }
+      },
+      {
+        "id": "csv-parser",
+        "package": "csv-parser",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "parser only: index.d.ts declares one parser factory and no writer"
+        }
+      },
+      {
+        "id": "fast-csv",
+        "package": "@fast-csv/parse",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "parser only; fast-csv writes with @fast-csv/format, measured as fast-csv-format"
+        }
+      },
+      {
+        "id": "d3-dsv",
+        "package": "d3-dsv",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "udsv",
+        "package": "udsv",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "no writer: dist/uDSV.mjs exports inferSchema and initParser only"
+        }
+      },
+      {
+        "id": "csv-simple-parser",
+        "package": "csv-simple-parser",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "parser only: dist/index.d.ts exports one function, parse"
+        }
+      },
+      {
+        "id": "csv-rex",
+        "package": "csv-rex",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "csv-pipe",
+        "package": "csv-pipe",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "amigo-labs-csv",
+        "package": "@amigo-labs/csv",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "but-csv",
+        "package": "but-csv",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "tiddlycsv",
+        "package": "tiddlycsv",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "web-csv-toolbox",
+        "package": "web-csv-toolbox",
+        "lanes": [],
+        "missingLanes": {
+          "W1": "parser only: dist/common.d.ts exports parsers and no writer"
+        }
+      },
+      {
+        "id": "csv-stringify",
+        "package": "csv-stringify",
+        "lanes": ["W1"]
+      },
+      {
+        "id": "fast-csv-format",
+        "package": "@fast-csv/format",
+        "lanes": ["W1"]
+      }
+    ],
+    "unsupported": [
+      {
+        "impl": "d3-dsv",
+        "families": ["quote-heavy"],
+        "reason": "writes '\\n' between records and has no line-ending option; the family uses CRLF"
+      },
+      {
+        "impl": "amigo-labs-csv",
+        "families": ["quote-heavy"],
+        "reason": "writes '\\n' between records and has no line-ending option; the family uses CRLF"
+      },
+      {
+        "impl": "but-csv",
+        "families": ["quote-heavy"],
+        "reason": "writes '\\n' between records and has no line-ending option; the family uses CRLF"
+      },
+      {
+        "impl": "but-csv",
+        "cases": [
+          "W1-records-simple-1MiB",
+          "W1-records-simple-32MiB",
+          "W1-records-quote-heavy-1MiB",
+          "W1-records-quote-heavy-32MiB",
+          "W1-records-multiline-1MiB",
+          "W1-records-multiline-32MiB",
+          "W1-records-wide-1MiB",
+          "W1-records-wide-32MiB",
+          "W1-records-unicode-1MiB",
+          "W1-records-unicode-32MiB",
+          "W1-records-long-field-1MiB",
+          "W1-records-long-field-32MiB"
+        ],
+        "reason": "build writes arrays only"
+      },
+      {
+        "impl": "tiddlycsv",
+        "families": ["quote-heavy"],
+        "reason": "writes '\\n' between records and has no line-ending option; the family uses CRLF"
+      },
+      {
+        "impl": "tiddlycsv",
+        "cases": [
+          "W1-records-simple-1MiB",
+          "W1-records-simple-32MiB",
+          "W1-records-quote-heavy-1MiB",
+          "W1-records-quote-heavy-32MiB",
+          "W1-records-multiline-1MiB",
+          "W1-records-multiline-32MiB",
+          "W1-records-wide-1MiB",
+          "W1-records-wide-32MiB",
+          "W1-records-unicode-1MiB",
+          "W1-records-unicode-32MiB",
+          "W1-records-long-field-1MiB",
+          "W1-records-long-field-32MiB"
+        ],
+        "reason": "writeCSV writes arrays only"
+      },
+      {
+        "impl": "csv-pipe",
+        "cases": [
+          "W1-rows-simple-1MiB",
+          "W1-rows-simple-32MiB",
+          "W1-rows-quote-heavy-1MiB",
+          "W1-rows-quote-heavy-32MiB",
+          "W1-rows-multiline-1MiB",
+          "W1-rows-multiline-32MiB",
+          "W1-rows-wide-1MiB",
+          "W1-rows-wide-32MiB",
+          "W1-rows-unicode-1MiB",
+          "W1-rows-unicode-32MiB",
+          "W1-rows-long-field-1MiB",
+          "W1-rows-long-field-32MiB"
+        ],
+        "reason": "stringify writes records keyed by column name (CsvRecord); arrays are not a documented input"
+      }
+    ],
+    "shards": [
+      {
+        "id": "W1-rows",
+        "cases": [
+          "W1-rows-simple-1MiB",
+          "W1-rows-simple-32MiB",
+          "W1-rows-quote-heavy-1MiB",
+          "W1-rows-quote-heavy-32MiB",
+          "W1-rows-multiline-1MiB",
+          "W1-rows-multiline-32MiB",
+          "W1-rows-wide-1MiB",
+          "W1-rows-wide-32MiB",
+          "W1-rows-unicode-1MiB",
+          "W1-rows-unicode-32MiB",
+          "W1-rows-long-field-1MiB",
+          "W1-rows-long-field-32MiB"
+        ]
+      },
+      {
+        "id": "W1-records",
+        "cases": [
+          "W1-records-simple-1MiB",
+          "W1-records-simple-32MiB",
+          "W1-records-quote-heavy-1MiB",
+          "W1-records-quote-heavy-32MiB",
+          "W1-records-multiline-1MiB",
+          "W1-records-multiline-32MiB",
+          "W1-records-wide-1MiB",
+          "W1-records-wide-32MiB",
+          "W1-records-unicode-1MiB",
+          "W1-records-unicode-32MiB",
+          "W1-records-long-field-1MiB",
+          "W1-records-long-field-32MiB"
+        ]
+      }
+    ],
+    "cases": [
+      {
+        "id": "W1-rows-simple-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "simple",
+        "targetBytes": 1048576,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 1048633,
+          "rows": 18939,
+          "columns": 8,
+          "sha256": "d5ea9edb2549f4f2f86235dd87a7f779b006b2d567e6b71dd7ce9a9ecda175c5"
+        }
+      },
+      {
+        "id": "W1-rows-simple-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "simple",
+        "targetBytes": 33554432,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 33554460,
+          "rows": 592037,
+          "columns": 8,
+          "sha256": "6c30edde929db9da930e7f7bf128e62d4ad3fcce169eeb94e23f0b5d396d126e"
+        }
+      },
+      {
+        "id": "W1-rows-quote-heavy-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "quote-heavy",
+        "targetBytes": 1048576,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 1048677,
+          "rows": 7751,
+          "columns": 8,
+          "sha256": "394ffd2c67447f325467348faeb093286ad456b4a1f5fc7f68077e22fa3bf6ca"
+        }
+      },
+      {
+        "id": "W1-rows-quote-heavy-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "quote-heavy",
+        "targetBytes": 33554432,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 33554548,
+          "rows": 244873,
+          "columns": 8,
+          "sha256": "84b29a80362061f5a6741d51298e2d383aad38ed7f37cac7291cbe441ea1ce05"
+        }
+      },
+      {
+        "id": "W1-rows-multiline-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "multiline",
+        "targetBytes": 1048576,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 1048604,
+          "rows": 10461,
+          "columns": 6,
+          "sha256": "de9797a5160764bca341c9da9b81d7ceed64263a484345ddcb1abdaf16f7d7d5"
+        }
+      },
+      {
+        "id": "W1-rows-multiline-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "multiline",
+        "targetBytes": 33554432,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 33554477,
+          "rows": 329562,
+          "columns": 6,
+          "sha256": "917e516e431e80e5ea1f9440f9e5c14f85511eddfe449526657e001cee177ed7"
+        }
+      },
+      {
+        "id": "W1-rows-wide-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "wide",
+        "targetBytes": 1048576,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 1049137,
+          "rows": 833,
+          "columns": 256,
+          "sha256": "cad3907070f71c5842ac66fa247c3e3209b02c3fdc794e71b2d6dcfc5e3786cf"
+        }
+      },
+      {
+        "id": "W1-rows-wide-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "wide",
+        "targetBytes": 33554432,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 33554873,
+          "rows": 26688,
+          "columns": 256,
+          "sha256": "6f43559246aa66e233602b553e538f680cf968f3caeed2295a77fbc1482ae5ac"
+        }
+      },
+      {
+        "id": "W1-rows-unicode-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "unicode",
+        "targetBytes": 1048576,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 1048613,
+          "rows": 9253,
+          "columns": 8,
+          "sha256": "836c897f53762a3e149deb1404ed5ed45678c164d1b062eca4328dd4b0aa4a7d"
+        }
+      },
+      {
+        "id": "W1-rows-unicode-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "unicode",
+        "targetBytes": 33554432,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 33554537,
+          "rows": 291286,
+          "columns": 8,
+          "sha256": "5f6abc24de4ee84da1c7b388eedf6aaa2226d8f915d1e3ca5b15ba953aecf1fe"
+        }
+      },
+      {
+        "id": "W1-rows-long-field-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "long-field",
+        "targetBytes": 1048576,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 1063814,
+          "rows": 29,
+          "columns": 4,
+          "sha256": "c44cc06617ba4dce97068afb27776bda6a2439620fbaa7ddd601d68422f0e4bc"
+        }
+      },
+      {
+        "id": "W1-rows-long-field-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "long-field",
+        "targetBytes": 33554432,
+        "shape": "rows",
+        "fixture": {
+          "bytes": 33593211,
+          "rows": 901,
+          "columns": 4,
+          "sha256": "32402480cfb296eb018d46a05cfa0a8a98ccbfc84bb8b7e6f12775f451edefed"
+        }
+      },
+      {
+        "id": "W1-records-simple-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "simple",
+        "targetBytes": 1048576,
+        "shape": "records",
+        "fixture": {
+          "bytes": 1048633,
+          "rows": 18939,
+          "columns": 8,
+          "sha256": "d5ea9edb2549f4f2f86235dd87a7f779b006b2d567e6b71dd7ce9a9ecda175c5"
+        }
+      },
+      {
+        "id": "W1-records-simple-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "simple",
+        "targetBytes": 33554432,
+        "shape": "records",
+        "fixture": {
+          "bytes": 33554460,
+          "rows": 592037,
+          "columns": 8,
+          "sha256": "6c30edde929db9da930e7f7bf128e62d4ad3fcce169eeb94e23f0b5d396d126e"
+        }
+      },
+      {
+        "id": "W1-records-quote-heavy-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "quote-heavy",
+        "targetBytes": 1048576,
+        "shape": "records",
+        "fixture": {
+          "bytes": 1048677,
+          "rows": 7751,
+          "columns": 8,
+          "sha256": "394ffd2c67447f325467348faeb093286ad456b4a1f5fc7f68077e22fa3bf6ca"
+        }
+      },
+      {
+        "id": "W1-records-quote-heavy-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "quote-heavy",
+        "targetBytes": 33554432,
+        "shape": "records",
+        "fixture": {
+          "bytes": 33554548,
+          "rows": 244873,
+          "columns": 8,
+          "sha256": "84b29a80362061f5a6741d51298e2d383aad38ed7f37cac7291cbe441ea1ce05"
+        }
+      },
+      {
+        "id": "W1-records-multiline-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "multiline",
+        "targetBytes": 1048576,
+        "shape": "records",
+        "fixture": {
+          "bytes": 1048604,
+          "rows": 10461,
+          "columns": 6,
+          "sha256": "de9797a5160764bca341c9da9b81d7ceed64263a484345ddcb1abdaf16f7d7d5"
+        }
+      },
+      {
+        "id": "W1-records-multiline-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "multiline",
+        "targetBytes": 33554432,
+        "shape": "records",
+        "fixture": {
+          "bytes": 33554477,
+          "rows": 329562,
+          "columns": 6,
+          "sha256": "917e516e431e80e5ea1f9440f9e5c14f85511eddfe449526657e001cee177ed7"
+        }
+      },
+      {
+        "id": "W1-records-wide-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "wide",
+        "targetBytes": 1048576,
+        "shape": "records",
+        "fixture": {
+          "bytes": 1049137,
+          "rows": 833,
+          "columns": 256,
+          "sha256": "cad3907070f71c5842ac66fa247c3e3209b02c3fdc794e71b2d6dcfc5e3786cf"
+        }
+      },
+      {
+        "id": "W1-records-wide-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "wide",
+        "targetBytes": 33554432,
+        "shape": "records",
+        "fixture": {
+          "bytes": 33554873,
+          "rows": 26688,
+          "columns": 256,
+          "sha256": "6f43559246aa66e233602b553e538f680cf968f3caeed2295a77fbc1482ae5ac"
+        }
+      },
+      {
+        "id": "W1-records-unicode-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "unicode",
+        "targetBytes": 1048576,
+        "shape": "records",
+        "fixture": {
+          "bytes": 1048613,
+          "rows": 9253,
+          "columns": 8,
+          "sha256": "836c897f53762a3e149deb1404ed5ed45678c164d1b062eca4328dd4b0aa4a7d"
+        }
+      },
+      {
+        "id": "W1-records-unicode-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "unicode",
+        "targetBytes": 33554432,
+        "shape": "records",
+        "fixture": {
+          "bytes": 33554537,
+          "rows": 291286,
+          "columns": 8,
+          "sha256": "5f6abc24de4ee84da1c7b388eedf6aaa2226d8f915d1e3ca5b15ba953aecf1fe"
+        }
+      },
+      {
+        "id": "W1-records-long-field-1MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "long-field",
+        "targetBytes": 1048576,
+        "shape": "records",
+        "fixture": {
+          "bytes": 1063814,
+          "rows": 29,
+          "columns": 4,
+          "sha256": "c44cc06617ba4dce97068afb27776bda6a2439620fbaa7ddd601d68422f0e4bc"
+        }
+      },
+      {
+        "id": "W1-records-long-field-32MiB",
+        "lane": "W1",
+        "class": "primary",
+        "weight": 1,
+        "family": "long-field",
+        "targetBytes": 33554432,
+        "shape": "records",
+        "fixture": {
+          "bytes": 33593211,
+          "rows": 901,
+          "columns": 4,
+          "sha256": "32402480cfb296eb018d46a05cfa0a8a98ccbfc84bb8b7e6f12775f451edefed"
+        }
+      }
+    ]
+  },
+  "s1": {
+    "status": "The S1 cases under method v2 beside the six S1 1 MiB cases of bench/manifest.json: the six families at 32 MiB in 65,536-byte chunks (with the v1 six, the campaign's twelve, in three shards), and their one-chunk variants (chunkBytes: the fixture's byte length), which only the A/B tool runs. Arms beside the candidate (batchSize 1024) on every campaign case: batchSize 256 and 4096, and csv-engine-bulk. Class additional, weight 0: never primary, never in the B1/B2 score.",
+    "arms": {
+      "csv-engine-batch256": { "batchSize": 256 },
+      "csv-engine-batch4096": { "batchSize": 4096 },
+      "csv-engine-bulk": {}
+    },
+    "shards": [
+      {
+        "id": "S1-1MiB",
+        "cases": [
+          "S1-simple-1MiB",
+          "S1-quote-heavy-1MiB",
+          "S1-multiline-1MiB",
+          "S1-wide-1MiB",
+          "S1-unicode-1MiB",
+          "S1-long-field-1MiB"
+        ]
+      },
+      {
+        "id": "S1-32MiB-a",
+        "cases": ["S1-simple-32MiB", "S1-quote-heavy-32MiB", "S1-multiline-32MiB"]
+      },
+      {
+        "id": "S1-32MiB-b",
+        "cases": ["S1-wide-32MiB", "S1-unicode-32MiB", "S1-long-field-32MiB"]
+      }
+    ],
+    "cases": [
+      {
+        "id": "S1-simple-32MiB",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "simple",
+        "targetBytes": 33554432,
+        "fixture": {
+          "bytes": 33554460,
+          "rows": 592037,
+          "columns": 8,
+          "sha256": "6c30edde929db9da930e7f7bf128e62d4ad3fcce169eeb94e23f0b5d396d126e"
+        }
+      },
+      {
+        "id": "S1-quote-heavy-32MiB",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "quote-heavy",
+        "targetBytes": 33554432,
+        "fixture": {
+          "bytes": 33554548,
+          "rows": 244873,
+          "columns": 8,
+          "sha256": "84b29a80362061f5a6741d51298e2d383aad38ed7f37cac7291cbe441ea1ce05"
+        }
+      },
+      {
+        "id": "S1-multiline-32MiB",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "multiline",
+        "targetBytes": 33554432,
+        "fixture": {
+          "bytes": 33554477,
+          "rows": 329562,
+          "columns": 6,
+          "sha256": "917e516e431e80e5ea1f9440f9e5c14f85511eddfe449526657e001cee177ed7"
+        }
+      },
+      {
+        "id": "S1-wide-32MiB",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "wide",
+        "targetBytes": 33554432,
+        "fixture": {
+          "bytes": 33554873,
+          "rows": 26688,
+          "columns": 256,
+          "sha256": "6f43559246aa66e233602b553e538f680cf968f3caeed2295a77fbc1482ae5ac"
+        }
+      },
+      {
+        "id": "S1-unicode-32MiB",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "unicode",
+        "targetBytes": 33554432,
+        "fixture": {
+          "bytes": 33554537,
+          "rows": 291286,
+          "columns": 8,
+          "sha256": "5f6abc24de4ee84da1c7b388eedf6aaa2226d8f915d1e3ca5b15ba953aecf1fe"
+        }
+      },
+      {
+        "id": "S1-long-field-32MiB",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "long-field",
+        "targetBytes": 33554432,
+        "fixture": {
+          "bytes": 33593211,
+          "rows": 901,
+          "columns": 4,
+          "sha256": "32402480cfb296eb018d46a05cfa0a8a98ccbfc84bb8b7e6f12775f451edefed"
+        }
+      },
+      {
+        "id": "S1-simple-32MiB-one-chunk",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "simple",
+        "targetBytes": 33554432,
+        "chunkBytes": 33554460,
+        "fixture": {
+          "bytes": 33554460,
+          "rows": 592037,
+          "columns": 8,
+          "sha256": "6c30edde929db9da930e7f7bf128e62d4ad3fcce169eeb94e23f0b5d396d126e"
+        }
+      },
+      {
+        "id": "S1-quote-heavy-32MiB-one-chunk",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "quote-heavy",
+        "targetBytes": 33554432,
+        "chunkBytes": 33554548,
+        "fixture": {
+          "bytes": 33554548,
+          "rows": 244873,
+          "columns": 8,
+          "sha256": "84b29a80362061f5a6741d51298e2d383aad38ed7f37cac7291cbe441ea1ce05"
+        }
+      },
+      {
+        "id": "S1-multiline-32MiB-one-chunk",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "multiline",
+        "targetBytes": 33554432,
+        "chunkBytes": 33554477,
+        "fixture": {
+          "bytes": 33554477,
+          "rows": 329562,
+          "columns": 6,
+          "sha256": "917e516e431e80e5ea1f9440f9e5c14f85511eddfe449526657e001cee177ed7"
+        }
+      },
+      {
+        "id": "S1-wide-32MiB-one-chunk",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "wide",
+        "targetBytes": 33554432,
+        "chunkBytes": 33554873,
+        "fixture": {
+          "bytes": 33554873,
+          "rows": 26688,
+          "columns": 256,
+          "sha256": "6f43559246aa66e233602b553e538f680cf968f3caeed2295a77fbc1482ae5ac"
+        }
+      },
+      {
+        "id": "S1-unicode-32MiB-one-chunk",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "unicode",
+        "targetBytes": 33554432,
+        "chunkBytes": 33554537,
+        "fixture": {
+          "bytes": 33554537,
+          "rows": 291286,
+          "columns": 8,
+          "sha256": "5f6abc24de4ee84da1c7b388eedf6aaa2226d8f915d1e3ca5b15ba953aecf1fe"
+        }
+      },
+      {
+        "id": "S1-long-field-32MiB-one-chunk",
+        "lane": "S1",
+        "class": "additional",
+        "weight": 0,
+        "family": "long-field",
+        "targetBytes": 33554432,
+        "chunkBytes": 33593211,
+        "fixture": {
+          "bytes": 33593211,
+          "rows": 901,
+          "columns": 4,
+          "sha256": "32402480cfb296eb018d46a05cfa0a8a98ccbfc84bb8b7e6f12775f451edefed"
+        }
+      }
+    ]
+  }
+}

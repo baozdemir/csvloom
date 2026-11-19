@@ -1,0 +1,2 @@
+[{"name":"Ada","age":36}]
+[{"type":"Schema","code":"InvalidRow","message":"age must be a whole number","row":1,"path":["age"],"value":{"name":"Grace","age":"x"}}]

@@ -1,0 +1,2 @@
+rows: 5
+sink failed at row 0; source destroyed: true

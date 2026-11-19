@@ -1,0 +1,2 @@
+";" "Sales report 2026\n"
+[{"id":"1","name":"Ada","amount":"1,5"},{"id":"2","name":"Grace","amount":"2,25"}]

@@ -1,0 +1,23 @@
+name: Feature request
+description: Something the library does not do
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: The scope is small on purpose. CONTRIBUTING.md lists what is out of scope today.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What you are trying to do
+      description: The task and the data, not the API you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What you do today
+      description: The code you have now, with csvloom or with another library.
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like

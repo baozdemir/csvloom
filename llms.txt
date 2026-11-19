@@ -1,0 +1,126 @@
+# csvloom
+
+> csvloom is a CSV parser and writer for JavaScript and TypeScript: ESM and CommonJS, types included, no dependencies, no `eval`, tested on Node 22, 24 and 26. For a string it returns what Papa Parse 5.7.1 returns, and it is faster than Papa Parse on every published `parse` and `parseStream` case. It adds `parseStream` for files and HTTP bodies, and it escapes spreadsheet formulas when it writes.
+
+```sh
+npm install csvloom
+```
+
+Rules that are easy to get wrong:
+
+- Pick the entry by the job. `csvloom` has `parse(text, config)`, `unparse(data, config)` and `parseDetailed(text, config)`, as named exports only. `csvloom/papa` is for existing Papa Parse code: `import Papa from 'csvloom/papa'`. `csvloom/stream` has `parseStream(source, config)`.
+- `parse` and `Papa.parse` take a string and return `{ data, errors, meta }` synchronously. They do not take a `File`, `Blob`, URL or stream, and `step`, `chunk`, `complete`, `error`, `worker`, `download` and `encoding` throw `UnsupportedFeatureError`. For files, URLs and streams use `parseStream`.
+- `parseStream` returns an async iterator of batches `{ data, errors, meta }`, up to 1024 rows each by default (`batchSize`), fewer when a batch's text reaches 1,048,576 UTF-16 units. Read it with `for await`; it has no callbacks. A source is a string, `file.stream()`, `response.body`, a Node `Readable`, or a sync or async iterable of string or `Uint8Array` chunks. A bare `Uint8Array` is not a source: pass `[bytes]`. Bytes must be UTF-8.
+- Malformed CSV does not throw: read `errors` (`type`, `code`, `message`, `row`). A wrong option does throw: in `csvloom`, an unknown option or a value of the wrong type is a `TypeError` that names it.
+- A final line break gives one more record (with `header: true`, an almost empty row and a `TooFewFields` error). Pass `skipEmptyLines: true` unless you want it.
+- `unparse` from `csvloom` writes `'` before a value that starts with `=`, `+`, `-`, `@`, a tab or a line break, and quotes it; a plain number such as `-5` is left alone. `escapeFormulae: false` writes values as they are. `Papa.unparse` from `csvloom/papa` does not escape unless asked.
+- `unparse` ends records with `\r\n` by default. For spreadsheet programs pass a preset: `unparse(rows, excel)` or `unparse(rows, excelSemicolon)`.
+- `detect`, `positions`, `repair`, `schema` and `sepLine` are options of `parseDetailed` and `parseStream`. `parse` rejects them as unknown options.
+- For input you do not trust, use `parseStream` with `maxRecordLength` (it has no default), `delimiter` and `newline`.
+- Types are included for ESM and CommonJS. The row type follows the config: `string[]` by default, an object per record with `header: true`, typed values with `dynamicTyping`, and the schema's output type with `schema`.
+- Where it was tested: Node 22, 24 and 26 on Linux x64 and macOS; Node 24 on Windows; Deno 2.9.8 and Bun 1.4.4 (the examples against the packed package); Chromium, Firefox and WebKit as shipped with Playwright 1.65.0, and Safari 18.6, on macOS; `parseStream` in deployed Cloudflare Workers and Vercel Edge Functions and in local workerd. Other runtimes and versions were not tested; say so rather than assume.
+- Not in csvloom: Papa's callbacks, worker mode and downloads, encodings other than UTF-8 for bytes (decode with `TextDecoderStream` first), XLSX, SQL and a command-line tool. Suggest another tool for those rather than inventing an option.
+- Speed numbers are published in `docs/benchmarks.md`, "Published numbers (Node 26)", lane by lane; the headline figures are below. Quote a number only with its lane and conditions, and never as "fastest".
+
+<!-- published-results:start -->
+
+Speed, from `docs/benchmarks.md` (Node 26.13.1 at default settings, papaparse 5.7.1, each lane on its own):
+
+- `parse` of a string: 2.596 times as fast as Papa Parse (geometric mean over 24 cases), and faster on all 24.
+- `parseStream`: faster than Papa Parse on all 12 cases.
+- `unparse`: faster than or on par with Papa Parse on all 24 cases.
+
+<!-- published-results:end -->
+
+Strings in, rows out:
+
+```js
+import { parse, unparse } from 'csvloom';
+
+const csv = 'name,city\nAda,"London, UK"\nGrace,New York';
+
+// Rows as arrays, or as objects keyed by the header record.
+console.log(JSON.stringify(parse(csv).data));
+const { data, errors, meta } = parse(csv, { header: true });
+console.log(JSON.stringify(data), errors.length, JSON.stringify(meta.fields));
+
+// Back to CSV. A value that a spreadsheet would run as a formula is escaped by default.
+// (The default newline is "\r\n"; "\n" keeps this output readable.)
+console.log(unparse([{ name: 'Ada', note: '=1+1' }], { newline: '\n' }));
+```
+
+```text
+[["name","city"],["Ada","London, UK"],["Grace","New York"]]
+[{"name":"Ada","city":"London, UK"},{"name":"Grace","city":"New York"}] 0 ["name","city"]
+name,note
+Ada,"'=1+1"
+```
+
+Files, HTTP bodies and other chunked input:
+
+```js
+import { parseStream } from 'csvloom/stream';
+
+// A source is text or UTF-8 bytes in pieces: a fetch body, file.stream(), a Node Readable,
+// an array or an async generator of chunks.
+const { body } = new Response('id,name\n1,Ada\n2,Grace\n3,Linus\n');
+
+const options = { header: true, skipEmptyLines: true, batchSize: 2 };
+for await (const batch of parseStream(body, options)) {
+  console.log(JSON.stringify(batch.data), batch.meta.rowOffset, batch.meta.done);
+}
+```
+
+```text
+[{"id":"1","name":"Ada"},{"id":"2","name":"Grace"}] 0 false
+[{"id":"3","name":"Linus"}] 2 true
+```
+
+Errors with positions, and repair with a log of every change:
+
+```js
+import { formatError, parseDetailed } from 'csvloom';
+
+const text = 'id;name;qty\n1;Ada;3\n2;Grace\n3;"Linus;5\n';
+
+// parseDetailed takes every option of parse, plus the features. Each is off unless asked for.
+const result = parseDetailed(text, { detect: true, header: true, positions: true });
+console.log(JSON.stringify(result.meta.delimiter), result.data.length, 'rows');
+for (const error of result.errors) console.log(formatError(error));
+
+// repair changes only what its rules name, and logs every change.
+const repaired = parseDetailed(text, { detect: true, header: true, repair: true });
+console.log(JSON.stringify(repaired.data));
+console.log(JSON.stringify(repaired.repairs.map(({ rule, line }) => ({ rule, line }))));
+console.log(repaired.errors.length, 'errors left');
+```
+
+```text
+";" 3 rows
+Quoted field unterminated [MissingQuotes] at line 4, column 3 (row 3, offset 30)
+  4 | 3;"Linus;5
+    |   ^
+Too few fields: expected 3 fields but parsed 2 [TooFewFields] at line 3, column 1 (row 1, offset 20)
+  3 | 2;Grace
+    | ^
+Too few fields: expected 3 fields but parsed 2 [TooFewFields] at line 4, column 1 (row 2, offset 28)
+  4 | 3;"Linus;5
+    | ^
+[{"id":"1","name":"Ada","qty":"3"},{"id":"2","name":"Grace","qty":""},{"id":"3","name":"\"Linus","qty":"5"}]
+[{"rule":"pad-missing","line":3},{"rule":"unclosed-quote","line":4},{"rule":"trailing-empty-record","line":4}]
+0 errors left
+```
+
+## Docs
+
+- [README](https://raw.githubusercontent.com/baozdemir/csvloom/main/README.md): what it does, what it does not do, where it was run
+- [Migrating from Papa Parse](https://raw.githubusercontent.com/baozdemir/csvloom/main/docs/migrating-from-papaparse.md): what one import changes and what needs a rewrite
+- [Streaming](https://raw.githubusercontent.com/baozdemir/csvloom/main/docs/streaming.md): `parseStream`, its batch, cancelling, untrusted input, memory, eleven recipes
+- [Features](https://raw.githubusercontent.com/baozdemir/csvloom/main/docs/features.md): detection, positions, repair, Excel output, row validation, formula escaping
+- [Compatibility](https://raw.githubusercontent.com/baozdemir/csvloom/main/docs/compatibility.md): every difference from Papa Parse 5.7.1 by id, and the support matrix
+
+## Optional
+
+- [Benchmarks](https://raw.githubusercontent.com/baozdemir/csvloom/main/docs/benchmarks.md): the published numbers (Node 26) for every case and library, the method and how to reproduce them
+- [Changelog](https://raw.githubusercontent.com/baozdemir/csvloom/main/CHANGELOG.md)
+- [Security policy](https://raw.githubusercontent.com/baozdemir/csvloom/main/SECURITY.md)

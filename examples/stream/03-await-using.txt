@@ -1,0 +1,2 @@
+first batch: [["id","name"]]
+source destroyed at the end of the block: true

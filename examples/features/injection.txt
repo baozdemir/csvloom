@@ -1,0 +1,4 @@
+"note,phone,change\r\n\"'=1+1\",\"'+90 555 123 45 67\",-5\r\n\"'@handle\",\"'-abc\",+1.5\r\n\"'-\",plain text,-2e3"
+"note,phone,change\r\n=1+1,+90 555 123 45 67,-5\r\n@handle,-abc,+1.5\r\n-,plain text,-2e3"
+[["note","phone","change"],["'=1+1","'+90 555 123 45 67","-5"],["'@handle","'-abc","+1.5"],["'-","plain text","-2e3"]]
+"\"'-5\",x"
