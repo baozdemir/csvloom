@@ -1,6 +1,6 @@
 {
   "name": "csvloom",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fast, safe CSV parser and writer for JavaScript and TypeScript: a drop-in replacement for Papa Parse on strings, a streaming parser with async iterators, errors with positions, repair and formula escaping. Zero dependencies, no eval.",
   "keywords": [
     "csv",

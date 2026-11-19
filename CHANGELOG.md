@@ -2,6 +2,15 @@
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html); before 1.0.0 a minor version may change behavior, and such changes are listed under **Breaking**.
 
+## [0.1.1] - 2026-11-20
+
+No code changes: `dist/` is the same as in 0.1.0.
+
+### Changed
+
+- Published from GitHub Actions through npm trusted publishing, with provenance: the npm page shows the workflow run and the commit it was built from.
+- The README links to the documentation on Context7.
+
 ## [0.1.0] - 2026-11-19
 
 The first release.
@@ -21,4 +30,5 @@ The first release.
 - Papa's callbacks, worker mode, downloads, `encoding` and non-string inputs throw `UnsupportedFeatureError` in both entries.
 - Every other intended difference is listed by id in [docs/compatibility.md](docs/compatibility.md); the migration is in [docs/migrating-from-papaparse.md](docs/migrating-from-papaparse.md).
 
+[0.1.1]: https://github.com/baozdemir/csvloom/releases/tag/v0.1.1
 [0.1.0]: https://github.com/baozdemir/csvloom/releases/tag/v0.1.0
