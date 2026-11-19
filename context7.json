@@ -6,7 +6,8 @@
   "rules": [
     "Pick the entry by the job: 'csvloom' has parse, unparse and parseDetailed as named exports only; 'csvloom/papa' (import Papa from 'csvloom/papa') is for existing Papa Parse code; 'csvloom/stream' has parseStream.",
     "parse and Papa.parse take a string and return { data, errors, meta } synchronously. For a File, Blob, URL or stream use parseStream; step, chunk, complete, error, worker, download and encoding throw UnsupportedFeatureError.",
-    "parseStream returns an async iterator of batches { data, errors, meta }: read it with for await. A source is a string, file.stream(), response.body, a Node Readable, or an iterable of string or Uint8Array chunks; a bare Uint8Array is not a source, pass [bytes]. Bytes must be UTF-8.",
+    "parseStream returns an async iterator of batches { data, errors, meta }: read it with for await. Bytes must be UTF-8.",
+    "A parseStream source is a string, file.stream(), response.body, a Node Readable, or an iterable of string or Uint8Array chunks; a bare Uint8Array is not a source, pass [bytes].",
     "Malformed CSV does not throw: read errors. In 'csvloom', an unknown option or a value of the wrong type throws a TypeError that names it.",
     "A final line break gives one more record; pass skipEmptyLines: true unless you want it.",
     "unparse from 'csvloom' escapes formula-like values by default (escapeFormulae: false turns it off); Papa.unparse from 'csvloom/papa' does not escape unless asked.",
