@@ -9,6 +9,7 @@
   <a href="https://github.com/baozdemir/csvloom/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/baozdemir/csvloom/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <a href="https://codecov.io/gh/baozdemir/csvloom"><img alt="coverage on Codecov" src="https://codecov.io/gh/baozdemir/csvloom/graph/badge.svg"></a>
   <a href="https://www.jsdocs.io/package/csvloom"><img alt="API docs on jsDocs.io" src="https://img.shields.io/badge/docs-jsdocs.io-blue"></a>
+  <a href="https://context7.com/baozdemir/csvloom"><img alt="docs for AI assistants on Context7" src="https://img.shields.io/badge/docs-Context7-blue"></a>
   <a href="https://www.npmjs.com/package/csvloom?activeTab=dependencies"><img alt="zero dependencies" src="https://img.shields.io/badge/dependencies-0-brightgreen"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
